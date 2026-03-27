@@ -133,13 +133,13 @@ class AvesMagnifierController {
     if (boundaries == null) return null;
 
     switch (scaleState) {
-      case .initial:
-      case .zoomedIn:
-      case .zoomedOut:
+      case ScaleState.initial:
+      case ScaleState.zoomedIn:
+      case ScaleState.zoomedOut:
         return boundaries.clampScale(boundaries.initialScale);
-      case .covering:
+      case ScaleState.covering:
         return boundaries.clampScale(ScaleLevel.scaleForCovering(boundaries.viewportSize, boundaries.contentSize));
-      case .originalSize:
+      case ScaleState.originalSize:
         return boundaries.clampScale(boundaries.originalScale);
     }
   }

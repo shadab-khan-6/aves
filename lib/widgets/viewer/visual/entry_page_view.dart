@@ -458,13 +458,13 @@ class _EntryPageViewState extends State<EntryPageView> with TickerProviderStateM
   void _onFling(AxisDirection direction) {
     const animate = true;
     switch (direction) {
-      case .left:
+      case AxisDirection.left:
         (context.isRtl ? const ShowNextEntryNotification(animate: animate) : const ShowPreviousEntryNotification(animate: animate)).dispatch(context);
-      case .right:
+      case AxisDirection.right:
         (context.isRtl ? const ShowPreviousEntryNotification(animate: animate) : const ShowNextEntryNotification(animate: animate)).dispatch(context);
-      case .up:
+      case AxisDirection.up:
         PopVisualNotification().dispatch(context);
-      case .down:
+      case AxisDirection.down:
         ShowInfoPageNotification().dispatch(context);
     }
   }
@@ -504,17 +504,17 @@ class _EntryPageViewState extends State<EntryPageView> with TickerProviderStateM
     if (videoController == null) return;
 
     switch (event.command) {
-      case .play:
+      case MediaCommand.play:
         videoController.play();
-      case .pause:
+      case MediaCommand.pause:
         videoController.pause();
-      case .skipToNext:
+      case MediaCommand.skipToNext:
         ShowNextVideoNotification().dispatch(context);
-      case .skipToPrevious:
+      case MediaCommand.skipToPrevious:
         ShowPreviousVideoNotification().dispatch(context);
-      case .stop:
+      case MediaCommand.stop:
         videoController.pause();
-      case .seek:
+      case MediaCommand.seek:
         if (event is MediaSeekCommandEvent) {
           videoController.seekTo(event.position);
         }
@@ -544,7 +544,7 @@ class _EntryPageViewState extends State<EntryPageView> with TickerProviderStateM
 
   static ScaleState _vectorScaleStateCycle(ScaleState actual) {
     switch (actual) {
-      case .initial:
+      case ScaleState.initial:
         return ScaleState.covering;
       default:
         return ScaleState.initial;

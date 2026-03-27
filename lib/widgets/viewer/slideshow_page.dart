@@ -123,14 +123,14 @@ class _SlideshowPageState extends State<SlideshowPage> {
 
   void _onActionSelected(SlideshowAction action) {
     switch (action) {
-      case .resume:
+      case SlideshowAction.resume:
         _viewerController.autopilot = true;
-      case .showInCollection:
+      case SlideshowAction.showInCollection:
         _showInCollection();
-      case .cast:
+      case SlideshowAction.cast:
         // ignore, as it should be handled at the viewer level
         break;
-      case .settings:
+      case SlideshowAction.settings:
         _showSettings(context);
     }
   }

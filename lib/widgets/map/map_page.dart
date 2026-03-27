@@ -543,7 +543,7 @@ class _ContentState extends State<_Content> with SingleTickerProviderStateMixin 
       await Future.delayed(animations.popUpAnimationDelay * timeDilation);
       final delegate = EntrySetActionDelegate();
       switch (selectedAction) {
-        case .editLocation:
+        case MapClusterAction.editLocation:
           final regionEntries = regionCollection?.sortedEntries ?? [];
           final markerIndex = regionEntries.indexOf(markerEntry);
           final location = await delegate.editLocationByMap(context, clusterEntries, markerLocation, openingCollection.copyWith());
@@ -553,7 +553,7 @@ class _ContentState extends State<_Content> with SingleTickerProviderStateMixin 
             }
             _mapController.moveTo(location);
           }
-        case .removeLocation:
+        case MapClusterAction.removeLocation:
           await delegate.removeLocation(context, clusterEntries);
       }
     }

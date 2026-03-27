@@ -39,25 +39,25 @@ class EntryInfoActionDelegate with FeedbackMixin, PermissionAwareMixin, EntryEdi
     final canWrite = appMode.canEditEntry && !settings.isReadOnly;
     switch (action) {
       // general
-      case .editDate:
-      case .editLocation:
-      case .editTitleDescription:
-      case .editRating:
-      case .editTags:
-      case .removeMetadata:
+      case EntryAction.editDate:
+      case EntryAction.editLocation:
+      case EntryAction.editTitleDescription:
+      case EntryAction.editRating:
+      case EntryAction.editTags:
+      case EntryAction.removeMetadata:
         return canWrite;
-      case .exportMetadata:
+      case EntryAction.exportMetadata:
         return true;
       // GeoTIFF
-      case .showGeoTiffOnMap:
+      case EntryAction.showGeoTiffOnMap:
         return appMode.canNavigate && targetEntry.isGeotiff;
       // motion photo
-      case .convertMotionPhotoToStillImage:
+      case EntryAction.convertMotionPhotoToStillImage:
         return canWrite && targetEntry.isMotionPhoto;
-      case .viewMotionPhotoVideo:
+      case EntryAction.viewMotionPhotoVideo:
         return appMode.canNavigate && targetEntry.isMotionPhoto;
       // debug
-      case .debug:
+      case EntryAction.debug:
         return !kReleaseMode;
       default:
         return false;
@@ -67,32 +67,32 @@ class EntryInfoActionDelegate with FeedbackMixin, PermissionAwareMixin, EntryEdi
   bool canApply(AvesEntry targetEntry, EntryAction action) {
     switch (action) {
       // general
-      case .rotateCCW:
-      case .rotateCW:
+      case EntryAction.rotateCCW:
+      case EntryAction.rotateCW:
         return targetEntry.canRotate;
-      case .flip:
+      case EntryAction.flip:
         return targetEntry.canFlip;
-      case .editDate:
+      case EntryAction.editDate:
         return targetEntry.canEditDate;
-      case .editLocation:
+      case EntryAction.editLocation:
         return targetEntry.canEditLocation;
-      case .editTitleDescription:
+      case EntryAction.editTitleDescription:
         return targetEntry.canEditTitleDescription;
-      case .editRating:
+      case EntryAction.editRating:
         return targetEntry.canEditRating;
-      case .editTags:
+      case EntryAction.editTags:
         return targetEntry.canEditTags;
-      case .removeMetadata:
+      case EntryAction.removeMetadata:
         return targetEntry.canEdit && targetEntry.isMetadataRemovalSupported;
-      case .exportMetadata:
+      case EntryAction.exportMetadata:
         return !availability.isLocked;
       // GeoTIFF
-      case .showGeoTiffOnMap:
+      case EntryAction.showGeoTiffOnMap:
         return true;
       // motion photo
-      case .convertMotionPhotoToStillImage:
+      case EntryAction.convertMotionPhotoToStillImage:
         return targetEntry.canEdit && targetEntry.isXmpEditionSupported;
-      case .viewMotionPhotoVideo:
+      case EntryAction.viewMotionPhotoVideo:
         return true;
       default:
         return false;
@@ -104,30 +104,30 @@ class EntryInfoActionDelegate with FeedbackMixin, PermissionAwareMixin, EntryEdi
     _eventStreamController.add(ActionStartedEvent(action));
     switch (action) {
       // general
-      case .editDate:
+      case EntryAction.editDate:
         await _editDate(context, targetEntry, collection);
-      case .editLocation:
+      case EntryAction.editLocation:
         await _editLocation(context, targetEntry, collection);
-      case .editTitleDescription:
+      case EntryAction.editTitleDescription:
         await _editTitleDescription(context, targetEntry);
-      case .editRating:
+      case EntryAction.editRating:
         await _editRating(context, targetEntry);
-      case .editTags:
+      case EntryAction.editTags:
         await _editTags(context, targetEntry);
-      case .removeMetadata:
+      case EntryAction.removeMetadata:
         await _removeMetadata(context, targetEntry);
-      case .exportMetadata:
+      case EntryAction.exportMetadata:
         await _exportMetadata(context, targetEntry);
       // GeoTIFF
-      case .showGeoTiffOnMap:
+      case EntryAction.showGeoTiffOnMap:
         await _showGeoTiffOnMap(context, targetEntry, collection);
       // motion photo
-      case .convertMotionPhotoToStillImage:
+      case EntryAction.convertMotionPhotoToStillImage:
         await _convertMotionPhotoToStillImage(context, targetEntry);
-      case .viewMotionPhotoVideo:
+      case EntryAction.viewMotionPhotoVideo:
         OpenEmbeddedDataNotification.motionPhotoVideo().dispatch(context);
       // debug
-      case .debug:
+      case EntryAction.debug:
         _goToDebug(context, targetEntry);
       default:
         break;

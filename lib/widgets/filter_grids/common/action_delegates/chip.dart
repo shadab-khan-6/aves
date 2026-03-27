@@ -31,26 +31,26 @@ class ChipActionDelegate with FeedbackMixin, VaultAwareMixin {
     required CollectionFilter filter,
   }) {
     switch (action) {
-      case .goToAlbumPage:
+      case ChipAction.goToAlbumPage:
         return filter is AlbumBaseFilter;
-      case .goToCountryPage:
+      case ChipAction.goToCountryPage:
         return filter is LocationFilter && filter.level == LocationLevel.country;
-      case .goToPlacePage:
+      case ChipAction.goToPlacePage:
         return filter is LocationFilter && filter.level == LocationLevel.place;
-      case .goToTagPage:
+      case ChipAction.goToTagPage:
         return filter is TagFilter;
-      case .goToExplorerPage:
+      case ChipAction.goToExplorerPage:
         return (filter is StoredAlbumFilter && !vaults.isVault(filter.album)) || filter is PathFilter;
-      case .ratingOrGreater:
+      case ChipAction.ratingOrGreater:
         return filter is RatingFilter && 1 <= filter.rating && filter.rating < 5 && filter.op != RatingFilter.opOrGreater;
-      case .ratingOrLower:
+      case ChipAction.ratingOrLower:
         return filter is RatingFilter && 1 < filter.rating && filter.rating <= 5 && filter.op != RatingFilter.opOrLower;
-      case .decompose:
+      case ChipAction.decompose:
         return filter is DynamicAlbumFilter;
-      case .reverse:
-      case .hide:
+      case ChipAction.reverse:
+      case ChipAction.hide:
         return true;
-      case .lockVault:
+      case ChipAction.lockVault:
         return (filter is StoredAlbumFilter && vaults.isVault(filter.album) && !vaults.isLocked(filter.album));
     }
   }
@@ -58,17 +58,17 @@ class ChipActionDelegate with FeedbackMixin, VaultAwareMixin {
   void onActionSelected(BuildContext context, CollectionFilter filter, ChipAction action) {
     reportService.log('$runtimeType handles $action');
     switch (action) {
-      case .goToAlbumPage:
+      case ChipAction.goToAlbumPage:
         final initialGroup = albumGrouping.getFilterParent(filter);
         _goTo(context, filter, AlbumListPage.routeName, (context) => AlbumListPage(initialGroup: initialGroup));
-      case .goToCountryPage:
+      case ChipAction.goToCountryPage:
         _goTo(context, filter, CountryListPage.routeName, (context) => const CountryListPage());
-      case .goToPlacePage:
+      case ChipAction.goToPlacePage:
         _goTo(context, filter, PlaceListPage.routeName, (context) => const PlaceListPage());
-      case .goToTagPage:
+      case ChipAction.goToTagPage:
         final initialGroup = tagGrouping.getFilterParent(filter);
         _goTo(context, filter, TagListPage.routeName, (context) => TagListPage(initialGroup: initialGroup));
-      case .goToExplorerPage:
+      case ChipAction.goToExplorerPage:
         String? path;
         if (filter is StoredAlbumFilter) {
           path = filter.album;
@@ -84,17 +84,17 @@ class ChipActionDelegate with FeedbackMixin, VaultAwareMixin {
             (route) => false,
           );
         }
-      case .ratingOrGreater:
+      case ChipAction.ratingOrGreater:
         SelectFilterNotification((filter as RatingFilter).copyWith(RatingFilter.opOrGreater)).dispatch(context);
-      case .ratingOrLower:
+      case ChipAction.ratingOrLower:
         SelectFilterNotification((filter as RatingFilter).copyWith(RatingFilter.opOrLower)).dispatch(context);
-      case .decompose:
+      case ChipAction.decompose:
         DecomposeFilterNotification(filter).dispatch(context);
-      case .reverse:
+      case ChipAction.reverse:
         SelectFilterNotification(filter.reverse()).dispatch(context);
-      case .hide:
+      case ChipAction.hide:
         _hide(context, filter);
-      case .lockVault:
+      case ChipAction.lockVault:
         if (filter is StoredAlbumFilter) {
           lockFilters({filter});
         }

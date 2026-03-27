@@ -11,18 +11,18 @@ enum SwipeAction { brightness, volume }
 extension ExtraSwipeAction on SwipeAction {
   Future<double> get() {
     switch (this) {
-      case .brightness:
+      case SwipeAction.brightness:
         return AvesApp.screenBrightness?.application ?? Future.value(1);
-      case .volume:
+      case SwipeAction.volume:
         return VolumeController.instance.getVolume();
     }
   }
 
   Future<void> set(double value) async {
     switch (this) {
-      case .brightness:
+      case SwipeAction.brightness:
         await AvesApp.screenBrightness?.setApplicationScreenBrightness(value);
-      case .volume:
+      case SwipeAction.volume:
         VolumeController.instance.showSystemUI = false;
         await VolumeController.instance.setVolume(value);
     }
@@ -119,18 +119,18 @@ class SwipeActionFeedback extends StatelessWidget {
 
   IconData _getMinIcon() {
     switch (action) {
-      case .brightness:
+      case SwipeAction.brightness:
         return AIcons.brightnessMin;
-      case .volume:
+      case SwipeAction.volume:
         return AIcons.volumeMin;
     }
   }
 
   IconData _getMaxIcon() {
     switch (action) {
-      case .brightness:
+      case SwipeAction.brightness:
         return AIcons.brightnessMax;
-      case .volume:
+      case SwipeAction.volume:
         return AIcons.volumeMax;
     }
   }

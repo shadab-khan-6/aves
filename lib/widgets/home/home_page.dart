@@ -175,13 +175,13 @@ class _HomePageState extends State<HomePage> {
               await settings.reload();
               final page = settings.getWidgetOpenPage(widgetId);
               switch (page) {
-                case .collection:
+                case WidgetOpenPage.collection:
                   _initialFilters = settings.getWidgetCollectionFilters(widgetId);
-                case .viewer:
+                case WidgetOpenPage.viewer:
                   appMode = AppMode.view;
                   intentUri = settings.getWidgetUri(widgetId);
-                case .home:
-                case .updateWidget:
+                case WidgetOpenPage.home:
+                case WidgetOpenPage.updateWidget:
                   break;
               }
               unawaited(WidgetService.update(widgetId));
@@ -200,9 +200,9 @@ class _HomePageState extends State<HomePage> {
         _initialExplorerPath = intentData[IntentDataKeys.explorerPath] as String?;
 
         switch (appMode) {
-          case .view:
-          case .edit:
-          case .setWallpaper:
+          case AppMode.view:
+          case AppMode.edit:
+          case AppMode.setWallpaper:
             if (intentUri != null) {
               _viewerEntry = await _initViewerEntry(
                 uri: intentUri,
@@ -224,10 +224,10 @@ class _HomePageState extends State<HomePage> {
       unawaited(reportService.setCustomKey('app_mode', appMode.toString()));
 
       switch (appMode) {
-        case .main:
-        case .pickCollectionFiltersExternal:
-        case .pickSingleMediaExternal:
-        case .pickMultipleMediaExternal:
+        case AppMode.main:
+        case AppMode.pickCollectionFiltersExternal:
+        case AppMode.pickSingleMediaExternal:
+        case AppMode.pickMultipleMediaExternal:
           unawaited(GlobalSearch.registerCallback());
           unawaited(AnalysisService.registerCallback());
           final source = context.read<CollectionSource>();
@@ -237,12 +237,12 @@ class _HomePageState extends State<HomePage> {
             source.canAnalyze = true;
             await source.init(scope: CollectionSource.fullScope, loadTopEntriesFirst: loadTopEntriesFirst);
           }
-        case .screenSaver:
+        case AppMode.screenSaver:
           await reportService.log('Initialize source to start screen saver');
           final source = context.read<CollectionSource>();
           source.canAnalyze = false;
           await source.init(scope: settings.screenSaverCollectionFilters);
-        case .view:
+        case AppMode.view:
           if (_isViewerSourceable(_viewerEntry) && _secureUris == null) {
             final directory = _viewerEntry?.directory;
             if (directory != null) {
@@ -256,8 +256,8 @@ class _HomePageState extends State<HomePage> {
           } else {
             await _initViewerEssentials();
           }
-        case .edit:
-        case .setWallpaper:
+        case AppMode.edit:
+        case AppMode.setWallpaper:
           await _initViewerEssentials();
         default:
           break;
@@ -305,7 +305,7 @@ class _HomePageState extends State<HomePage> {
     String routeName;
     Set<CollectionFilter?>? filters;
     switch (appMode) {
-      case .setWallpaper:
+      case AppMode.setWallpaper:
         return DirectMaterialPageRoute(
           settings: const RouteSettings(name: WallpaperPage.routeName),
           builder: (_) {
@@ -314,7 +314,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
         );
-      case .view:
+      case AppMode.view:
         AvesEntry viewerEntry = _viewerEntry!;
         CollectionLens? collection;
 
@@ -363,7 +363,7 @@ class _HomePageState extends State<HomePage> {
             );
           },
         );
-      case .edit:
+      case AppMode.edit:
         return DirectMaterialPageRoute(
           settings: const RouteSettings(name: EntryViewerPage.routeName),
           builder: (_) {
@@ -372,17 +372,17 @@ class _HomePageState extends State<HomePage> {
             );
           },
         );
-      case .initialization:
-      case .main:
-      case .pickCollectionFiltersExternal:
-      case .pickSingleMediaExternal:
-      case .pickMultipleMediaExternal:
-      case .pickFilteredMediaInternal:
-      case .pickUnfilteredMediaInternal:
-      case .pickFilterInternal:
-      case .previewMap:
-      case .screenSaver:
-      case .slideshow:
+      case AppMode.initialization:
+      case AppMode.main:
+      case AppMode.pickCollectionFiltersExternal:
+      case AppMode.pickSingleMediaExternal:
+      case AppMode.pickMultipleMediaExternal:
+      case AppMode.pickFilteredMediaInternal:
+      case AppMode.pickUnfilteredMediaInternal:
+      case AppMode.pickFilterInternal:
+      case AppMode.previewMap:
+      case AppMode.screenSaver:
+      case AppMode.slideshow:
         routeName = _initialRouteName ?? settings.homeNavItem.route;
         filters = _initialFilters ?? (settings.homeNavItem.route == CollectionPage.routeName ? settings.homeCustomCollection : {});
     }

@@ -167,15 +167,15 @@ class _EditEntryLocationDialogState extends State<EditEntryLocationDialog> with 
 
   Widget _buildContent() {
     switch (_action) {
-      case .chooseOnMap:
+      case LocationEditAction.chooseOnMap:
         return _buildChooseOnMapContent(context);
-      case .copyItem:
+      case LocationEditAction.copyItem:
         return _buildCopyItemContent(context);
-      case .setCustom:
+      case LocationEditAction.setCustom:
         return _buildSetCustomContent(context);
-      case .importGpx:
+      case LocationEditAction.importGpx:
         return _buildImportGpxContent(context);
-      case .remove:
+      case LocationEditAction.remove:
         return const SizedBox();
     }
   }
@@ -596,15 +596,15 @@ class _EditEntryLocationDialogState extends State<EditEntryLocationDialog> with 
 
   void _validate() {
     switch (_action) {
-      case .chooseOnMap:
+      case LocationEditAction.chooseOnMap:
         _isValidNotifier.value = _mapCoordinates != null;
-      case .copyItem:
+      case LocationEditAction.copyItem:
         _isValidNotifier.value = _copyItemSource.hasGps;
-      case .setCustom:
+      case LocationEditAction.setCustom:
         _isValidNotifier.value = _parseLatLng() != null;
-      case .importGpx:
+      case LocationEditAction.importGpx:
         _isValidNotifier.value = _gpxMap.isNotEmpty;
-      case .remove:
+      case LocationEditAction.remove:
         _isValidNotifier.value = true;
     }
   }
@@ -615,15 +615,15 @@ class _EditEntryLocationDialogState extends State<EditEntryLocationDialog> with 
     final LocationEditActionResult result = {};
     void addLocationForAllEntries(LatLng? latLng) => result.addEntries(entries.map((v) => MapEntry(v, latLng)));
     switch (_action) {
-      case .chooseOnMap:
+      case LocationEditAction.chooseOnMap:
         addLocationForAllEntries(_mapCoordinates);
-      case .copyItem:
+      case LocationEditAction.copyItem:
         addLocationForAllEntries(_copyItemSource.latLng);
-      case .setCustom:
+      case LocationEditAction.setCustom:
         addLocationForAllEntries(_parseLatLng());
-      case .importGpx:
+      case LocationEditAction.importGpx:
         result.addAll(_gpxMap);
-      case .remove:
+      case LocationEditAction.remove:
         addLocationForAllEntries(ExtraAvesEntryMetadataEdition.removalLocation);
     }
     navigator?.pop(result);

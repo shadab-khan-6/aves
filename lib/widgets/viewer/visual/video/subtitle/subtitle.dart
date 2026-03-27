@@ -166,20 +166,20 @@ class VideoSubtitles extends StatelessWidget {
 
                             late double anchorOffsetX, anchorOffsetY;
                             switch (textHAlign) {
-                              case .left:
+                              case TextAlign.left:
                                 anchorOffsetX = 0;
-                              case .right:
+                              case TextAlign.right:
                                 anchorOffsetX = -textWidth;
-                              case .center:
+                              case TextAlign.center:
                               default:
                                 anchorOffsetX = -textWidth / 2;
                             }
                             switch (textVAlign) {
-                              case .top:
+                              case TextAlignVertical.top:
                                 anchorOffsetY = 0;
-                              case .center:
+                              case TextAlignVertical.center:
                                 anchorOffsetY = -textHeight / 2;
-                              case .bottom:
+                              case TextAlignVertical.bottom:
                                 anchorOffsetY = -textHeight;
                             }
                             final alignOffset = Offset(anchorOffsetX, anchorOffsetY);
@@ -220,21 +220,21 @@ class VideoSubtitles extends StatelessWidget {
                           if (position == null) {
                             late double alignX;
                             switch (textHAlign) {
-                              case .left:
+                              case TextAlign.left:
                                 alignX = -1;
-                              case .right:
+                              case TextAlign.right:
                                 alignX = 1;
-                              case .center:
+                              case TextAlign.center:
                               default:
                                 alignX = 0;
                             }
                             late double alignY;
                             switch (textVAlign) {
-                              case .top:
+                              case TextAlignVertical.top:
                                 alignY = -bottom;
-                              case .center:
+                              case TextAlignVertical.center:
                                 alignY = 0;
-                              case .bottom:
+                              case TextAlignVertical.bottom:
                               default:
                                 alignY = bottom;
                             }

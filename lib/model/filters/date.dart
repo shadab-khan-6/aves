@@ -23,23 +23,23 @@ class DateFilter extends CollectionFilter {
   DateFilter(this.level, this.date, {super.reversed = false}) {
     _effectiveDate = date ?? DateTime.now();
     switch (level) {
-      case .y:
+      case DateLevel.y:
         _test = (entry) => entry.bestDate?.isAtSameYearAs(_effectiveDate) ?? false;
-      case .ym:
+      case DateLevel.ym:
         _test = (entry) => entry.bestDate?.isAtSameMonthAs(_effectiveDate) ?? false;
-      case .ymd:
+      case DateLevel.ymd:
         _test = (entry) => entry.bestDate?.isAtSameDayAs(_effectiveDate) ?? false;
-      case .md:
+      case DateLevel.md:
         final month = _effectiveDate.month;
         final day = _effectiveDate.day;
         _test = (entry) {
           final bestDate = entry.bestDate;
           return bestDate != null && bestDate.month == month && bestDate.day == day;
         };
-      case .m:
+      case DateLevel.m:
         final month = _effectiveDate.month;
         _test = (entry) => entry.bestDate?.month == month;
-      case .d:
+      case DateLevel.d:
         final day = _effectiveDate.day;
         _test = (entry) => entry.bestDate?.day == day;
     }
@@ -80,17 +80,17 @@ class DateFilter extends CollectionFilter {
 
   static bool isCompatibleLevel(DateLevel a, DateLevel b) {
     switch (a) {
-      case .y:
+      case DateLevel.y:
         return {DateLevel.md, DateLevel.m, DateLevel.d}.contains(b);
-      case .ym:
+      case DateLevel.ym:
         return DateLevel.d == b;
-      case .ymd:
+      case DateLevel.ymd:
         return false;
-      case .md:
+      case DateLevel.md:
         return DateLevel.y == b;
-      case .m:
+      case DateLevel.m:
         return {DateLevel.y, DateLevel.d}.contains(b);
-      case .d:
+      case DateLevel.d:
         return {DateLevel.y, DateLevel.ym, DateLevel.m}.contains(b);
     }
   }
@@ -102,21 +102,21 @@ class DateFilter extends CollectionFilter {
   String getLabel(BuildContext context) {
     final locale = context.locale;
     switch (level) {
-      case .y:
+      case DateLevel.y:
         return DateFormat.y(locale).format(_effectiveDate);
-      case .ym:
+      case DateLevel.ym:
         return DateFormat.yMMM(locale).format(_effectiveDate);
-      case .ymd:
+      case DateLevel.ymd:
         return formatDay(_effectiveDate, locale);
-      case .md:
+      case DateLevel.md:
         if (date != null) {
           return DateFormat.MMMd(locale).format(_effectiveDate);
         } else {
           return context.l10n.filterOnThisDayLabel;
         }
-      case .m:
+      case DateLevel.m:
         return DateFormat.MMMM(locale).format(_effectiveDate);
-      case .d:
+      case DateLevel.d:
         return DateFormat.d(locale).format(_effectiveDate);
     }
   }

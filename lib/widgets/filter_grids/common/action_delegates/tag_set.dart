@@ -56,11 +56,11 @@ class TagChipSetActionDelegate extends ChipSetActionDelegate<TagBaseFilter> {
     final isMain = appMode == AppMode.main;
 
     switch (action) {
-      case .createGroup:
+      case ChipSetAction.createGroup:
         return true;
-      case .group:
+      case ChipSetAction.group:
         return isMain && isSelecting;
-      case .remove:
+      case ChipSetAction.remove:
         return isMain && isSelecting && !settings.isReadOnly && (selectedFilters.isEmpty || selectedFilters.every((v) => v is TagFilter));
       default:
         return super.isVisible(
@@ -81,7 +81,7 @@ class TagChipSetActionDelegate extends ChipSetActionDelegate<TagBaseFilter> {
     required Set<TagBaseFilter> selectedFilters,
   }) {
     switch (action) {
-      case .delete:
+      case ChipSetAction.delete:
         return selectedFilters.isNotEmpty && selectedFilters.every((v) => v is TagFilter);
       default:
         return super.canApply(
@@ -98,9 +98,9 @@ class TagChipSetActionDelegate extends ChipSetActionDelegate<TagBaseFilter> {
     reportService.log('$runtimeType handles $action');
     switch (action) {
       // single/multiple filters
-      case .remove:
+      case ChipSetAction.remove:
         _remove(context);
-      case .group:
+      case ChipSetAction.group:
         _group(context);
       default:
         break;

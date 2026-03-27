@@ -413,16 +413,16 @@ class _AvesAppState extends State<AvesApp> with WidgetsBindingObserver {
     reportService.log('Lifecycle ${state.name}');
     AvesApp.lifecycleStateNotifier.value = state;
     switch (state) {
-      case .inactive:
+      case AppLifecycleState.inactive:
         switch (_appModeNotifier.value) {
-          case .main:
-          case .pickSingleMediaExternal:
-          case .pickMultipleMediaExternal:
+          case AppMode.main:
+          case AppMode.pickSingleMediaExternal:
+          case AppMode.pickMultipleMediaExternal:
             _saveTopEntries();
           default:
             break;
         }
-      case .resumed:
+      case AppLifecycleState.resumed:
         availability.onResume();
         RecentlyAddedFilter.updateNow();
         _mediaStoreSource.checkForChanges();
@@ -582,10 +582,10 @@ class _AvesAppState extends State<AvesApp> with WidgetsBindingObserver {
     void _applyMaxBrightness() {
       try {
         switch (settings.maxBrightness) {
-          case .never:
-          case .viewerOnly:
+          case MaxBrightness.never:
+          case MaxBrightness.viewerOnly:
             AvesApp.screenBrightness?.resetApplicationScreenBrightness();
-          case .always:
+          case MaxBrightness.always:
             AvesApp.screenBrightness?.setApplicationScreenBrightness(1);
         }
       } on PlatformException catch (e, stack) {
@@ -726,7 +726,7 @@ class _AvesAppState extends State<AvesApp> with WidgetsBindingObserver {
     final appMode = _appModeNotifier.value;
     debugPrint('App mode set to $appMode');
     switch (appMode) {
-      case .screenSaver:
+      case AppMode.screenSaver:
         // we cannot modify brightness without access to the activity
         _screenBrightness = null;
       default:

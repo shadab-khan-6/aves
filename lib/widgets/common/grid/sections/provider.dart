@@ -42,7 +42,7 @@ abstract class SectionedListLayoutProvider<T> extends StatelessWidget {
     return ProxyProvider0<SectionedListLayout<T>>(
       update: (context, _) {
         switch (tileLayout) {
-          case .mosaic:
+          case TileLayout.mosaic:
             return MosaicSectionLayoutBuilder<T>(
               sections: sections,
               showHeaders: showHeaders,
@@ -59,8 +59,8 @@ abstract class SectionedListLayoutProvider<T> extends StatelessWidget {
               tileAnimationDelay: tileAnimationDelay,
               coverRatioResolver: coverRatioResolver,
             ).updateLayouts(context);
-          case .grid:
-          case .list:
+          case TileLayout.grid:
+          case TileLayout.list:
             return FixedExtentSectionLayoutBuilder<T>(
               sections: sections,
               showHeaders: showHeaders,

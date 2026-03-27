@@ -5,8 +5,8 @@ import 'package:aves_model/aves_model.dart';
 extension ExtraEntryBackground on EntryBackground {
   bool get isColor {
     switch (this) {
-      case .black:
-      case .white:
+      case EntryBackground.black:
+      case EntryBackground.white:
         return true;
       default:
         return false;
@@ -15,9 +15,9 @@ extension ExtraEntryBackground on EntryBackground {
 
   Color get color {
     switch (this) {
-      case .white:
+      case EntryBackground.white:
         return const Color(0xFFFFFFFF);
-      case .black:
+      case EntryBackground.black:
       default:
         return const Color(0xFF000000);
     }

@@ -114,9 +114,9 @@ class _FloatingNavBarState extends State<FloatingNavBar> with SingleTickerProvid
 
   void _onDraggableScrollBarEvent(DraggableScrollbarEvent event) {
     switch (event) {
-      case .dragStart:
+      case DraggableScrollbarEvent.dragStart:
         _isDragging = true;
-      case .dragEnd:
+      case DraggableScrollbarEvent.dragEnd:
         _isDragging = false;
     }
   }

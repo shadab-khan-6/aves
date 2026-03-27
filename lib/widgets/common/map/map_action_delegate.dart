@@ -20,27 +20,27 @@ class MapActionDelegate with FeedbackMixin {
 
   bool isVisible(BuildContext context, MapAction action) {
     switch (action) {
-      case .selectStyle:
-      case .openMapApp:
-      case .zoomIn:
-      case .zoomOut:
+      case MapAction.selectStyle:
+      case MapAction.openMapApp:
+      case MapAction.zoomIn:
+      case MapAction.zoomOut:
         return true;
-      case .addShortcut:
+      case MapAction.addShortcut:
         return device.canPinShortcut && context.currentRouteName == MapPage.routeName;
     }
   }
 
   void onActionSelected(BuildContext context, MapAction action) {
     switch (action) {
-      case .selectStyle:
+      case MapAction.selectStyle:
         selectStyle(context);
-      case .openMapApp:
+      case MapAction.openMapApp:
         OpenMapAppNotification().dispatch(context);
-      case .zoomIn:
+      case MapAction.zoomIn:
         controller.zoomBy(1);
-      case .zoomOut:
+      case MapAction.zoomOut:
         controller.zoomBy(-1);
-      case .addShortcut:
+      case MapAction.addShortcut:
         _addShortcut(context);
     }
   }

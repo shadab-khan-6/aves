@@ -23,20 +23,20 @@ class FilterDraggableThumbLabel<T extends CollectionFilter> extends StatelessWid
       offsetY: offsetY,
       lineBuilder: (context, filterGridItem) {
         switch (sortFactor) {
-          case .date:
+          case ChipSortFactor.date:
             return [
               DraggableThumbLabel.formatMonthThumbLabel(context, filterGridItem.entry?.bestDate),
             ];
-          case .name:
-          case .path:
+          case ChipSortFactor.name:
+          case ChipSortFactor.path:
             return [
               filterGridItem.filter.getLabel(context),
             ];
-          case .count:
+          case ChipSortFactor.count:
             return [
               context.l10n.itemCount(context.read<CollectionSource>().count(filterGridItem.filter)),
             ];
-          case .size:
+          case ChipSortFactor.size:
             return [
               formatFileSize(context.locale, context.read<CollectionSource>().size(filterGridItem.filter)),
             ];

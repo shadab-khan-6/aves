@@ -11,11 +11,11 @@ class ScrollControllerAction extends CallbackAction<ScrollIntent> {
   ) {
     late int factor;
     switch (intent.direction) {
-      case .up:
-      case .left:
+      case AxisDirection.up:
+      case AxisDirection.left:
         factor = -1;
-      case .down:
-      case .right:
+      case AxisDirection.down:
+      case AxisDirection.right:
         factor = 1;
     }
     scrollController.animateTo(

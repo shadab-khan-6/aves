@@ -88,12 +88,12 @@ class MagnifierGestureRecognizer extends ScaleGestureRecognizer {
   @override
   void resolve(GestureDisposition disposition) {
     switch (disposition) {
-      case .accepted:
+      case GestureDisposition.accepted:
         // do not let super `ScaleGestureRecognizer` accept gestures
         // when it should yield to other recognizers
         final canAccept = _areMultiPointers() || _isPriorityGesture() || _canPanX() || _canPanY();
         super.resolve(canAccept ? GestureDisposition.accepted : GestureDisposition.rejected);
-      case .rejected:
+      case GestureDisposition.rejected:
         super.resolve(disposition);
     }
   }

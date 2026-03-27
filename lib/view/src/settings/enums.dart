@@ -191,9 +191,9 @@ extension ExtraVideoLoopModeView on VideoLoopMode {
   String getName(BuildContext context) {
     final l10n = context.l10n;
     return switch (this) {
-      .never => l10n.videoLoopModeNever,
-      .shortOnly => l10n.videoLoopModeShortOnly,
-      .always => l10n.videoLoopModeAlways,
+      VideoLoopMode.never => l10n.videoLoopModeNever,
+      VideoLoopMode.shortOnly => l10n.videoLoopModeShortOnly,
+      VideoLoopMode.always => l10n.videoLoopModeAlways,
     };
   }
 }

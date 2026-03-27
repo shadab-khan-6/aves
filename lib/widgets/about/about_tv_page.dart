@@ -141,20 +141,20 @@ class _ContentState extends State<_Content> {
 
   Widget _getTitle(_Section key) {
     switch (key) {
-      case .links:
+      case _Section.links:
         return Text('${context.l10n.appName} ${device.packageVersion}');
-      case .credits:
+      case _Section.credits:
         return Text(context.l10n.aboutCreditsSectionTitle);
-      case .translators:
+      case _Section.translators:
         return Text(context.l10n.aboutTranslatorsSectionTitle);
-      case .licenses:
+      case _Section.licenses:
         return Text(context.l10n.aboutLicensesSectionTitle);
     }
   }
 
   Widget _getBody(_Section key) {
     switch (key) {
-      case .links:
+      case _Section.links:
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: AppReference.buildLinks(context)
@@ -166,17 +166,17 @@ class _ContentState extends State<_Content> {
               )
               .toList(),
         );
-      case .credits:
+      case _Section.credits:
         return Padding(
           padding: const EdgeInsets.all(16),
           child: AboutCredits.buildBody(context),
         );
-      case .translators:
+      case _Section.translators:
         return Padding(
           padding: const EdgeInsets.all(16),
           child: AboutTranslators.buildBody(context),
         );
-      case .licenses:
+      case _Section.licenses:
         return Padding(
           padding: const EdgeInsets.all(16),
           child: Column(

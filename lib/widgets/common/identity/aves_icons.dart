@@ -8,6 +8,7 @@ import 'package:aves/theme/icons.dart';
 import 'package:aves/widgets/common/extensions/build_context.dart';
 import 'package:aves/widgets/common/extensions/theme.dart';
 import 'package:aves/widgets/common/grid/theme.dart';
+import 'package:aves_model/aves_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -332,16 +333,16 @@ class IconUtils {
     Widget buildIcon(IconData icon) => Icon(icon, size: size);
 
     switch (covers.effectiveAlbumType(albumPath)) {
-      case .camera:
+      case AlbumType.camera:
         return buildIcon(AIcons.cameraAlbum);
-      case .screenshots:
-      case .videoCaptures:
+      case AlbumType.screenshots:
+      case AlbumType.videoCaptures:
         return buildIcon(AIcons.screenshotAlbum);
-      case .screenRecordings:
+      case AlbumType.screenRecordings:
         return buildIcon(AIcons.recordingAlbum);
-      case .download:
+      case AlbumType.download:
         return buildIcon(AIcons.downloadAlbum);
-      case .app:
+      case AlbumType.app:
         final package = covers.effectiveAlbumPackage(albumPath);
         return package != null
             ? Image(
@@ -353,9 +354,9 @@ class IconUtils {
                 height: size,
               )
             : null;
-      case .vault:
+      case AlbumType.vault:
         return buildIcon(vaults.isLocked(albumPath) ? AIcons.locked : AIcons.unlocked);
-      case .regular:
+      case AlbumType.regular:
         return null;
     }
   }

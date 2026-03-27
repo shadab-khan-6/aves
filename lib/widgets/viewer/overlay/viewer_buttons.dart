@@ -183,18 +183,18 @@ class _TvButtonRowContent extends StatelessWidget {
     required bool enabled,
   }) {
     switch (action) {
-      case .toggleFavourite:
+      case EntryAction.toggleFavourite:
         final favouriteTargetEntry = mainEntry.isStack ? pageEntry : mainEntry;
         return FavouriteTogglerCaption(
           entries: {favouriteTargetEntry},
           enabled: enabled,
         );
-      case .videoToggleMute:
+      case EntryAction.videoToggleMute:
         return MuteTogglerCaption(
           controller: videoController,
           enabled: enabled,
         );
-      case .videoTogglePlay:
+      case EntryAction.videoTogglePlay:
         return PlayTogglerCaption(
           controller: videoController,
           enabled: enabled,
@@ -361,13 +361,13 @@ class _ViewerButtonRowContentState extends State<ViewerButtonRowContent> {
   PopupMenuItem<EntryAction> _buildPopupMenuItem(BuildContext context, EntryAction action, AvesVideoController? videoController) {
     var enabled = actionDelegate.canApply(action);
     switch (action) {
-      case .videoCaptureFrame:
+      case EntryAction.videoCaptureFrame:
         enabled &= videoController?.canCaptureFrameNotifier.value ?? false;
-      case .videoToggleMute:
+      case EntryAction.videoToggleMute:
         enabled &= videoController?.canMuteNotifier.value ?? false;
-      case .videoSelectStreams:
+      case EntryAction.videoSelectStreams:
         enabled &= videoController?.canSelectStreamNotifier.value ?? false;
-      case .videoSetSpeed:
+      case EntryAction.videoSetSpeed:
         enabled &= videoController?.canSetSpeedNotifier.value ?? false;
       default:
         break;
@@ -375,17 +375,17 @@ class _ViewerButtonRowContentState extends State<ViewerButtonRowContent> {
 
     Widget? child;
     switch (action) {
-      case .toggleFavourite:
+      case EntryAction.toggleFavourite:
         child = FavouriteToggler(
           entries: {favouriteTargetEntry},
           isMenuItem: true,
         );
-      case .videoToggleMute:
+      case EntryAction.videoToggleMute:
         child = MuteToggler(
           controller: videoController,
           isMenuItem: true,
         );
-      case .videoTogglePlay:
+      case EntryAction.videoTogglePlay:
         child = PlayToggler(
           controller: videoController,
           isMenuItem: true,
@@ -471,21 +471,21 @@ class _ViewerButtonRowContentState extends State<ViewerButtonRowContent> {
 
     final blurred = settings.enableBlurEffect;
     switch (action) {
-      case .copy:
+      case EntryAction.copy:
         return MoveButton(
           copy: true,
           blurred: blurred,
           onChooserValue: (album) => actionDelegate.quickMove(context, album, copy: true),
           onPressed: onPressed,
         );
-      case .move:
+      case EntryAction.move:
         return MoveButton(
           copy: false,
           blurred: blurred,
           onChooserValue: (album) => actionDelegate.quickMove(context, album, copy: false),
           onPressed: onPressed,
         );
-      case .share:
+      case EntryAction.share:
         return ShareButton(
           blurred: blurred,
           entries: {mainEntry},
@@ -493,39 +493,39 @@ class _ViewerButtonRowContentState extends State<ViewerButtonRowContent> {
           focusNode: focusNode,
           onPressed: onPressed,
         );
-      case .toggleFavourite:
+      case EntryAction.toggleFavourite:
         final favouriteTargetEntry = mainEntry.isStack ? pageEntry : mainEntry;
         return FavouriteToggler(
           entries: {favouriteTargetEntry},
           focusNode: focusNode,
           onPressed: onPressed,
         );
-      case .videoToggleMute:
+      case EntryAction.videoToggleMute:
         return MuteToggler(
           controller: videoController,
           focusNode: focusNode,
           onPressed: onPressed,
         );
-      case .videoTogglePlay:
+      case EntryAction.videoTogglePlay:
         return PlayToggler(
           controller: videoController,
           focusNode: focusNode,
           onPressed: onPressed,
         );
-      case .videoCaptureFrame:
+      case EntryAction.videoCaptureFrame:
         return _buildFromListenable(videoController?.canCaptureFrameNotifier);
-      case .videoSelectStreams:
+      case EntryAction.videoSelectStreams:
         return _buildFromListenable(videoController?.canSelectStreamNotifier);
-      case .videoSetSpeed:
+      case EntryAction.videoSetSpeed:
         return _buildFromListenable(videoController?.canSetSpeedNotifier);
-      case .editRating:
+      case EntryAction.editRating:
         return RateButton(
           blurred: blurred,
           onChooserValue: (rating) => actionDelegate.quickRate(context, rating),
           focusNode: focusNode,
           onPressed: onPressed,
         );
-      case .editTags:
+      case EntryAction.editTags:
         return TagButton(
           blurred: blurred,
           onChooserValue: (filter) => actionDelegate.quickTag(context, filter),

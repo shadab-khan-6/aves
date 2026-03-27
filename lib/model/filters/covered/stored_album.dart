@@ -77,21 +77,21 @@ class StoredAlbumFilter extends CollectionFilter with CoveredFilter, AlbumBaseFi
     // to prevent rebuilding of the `FutureBuilder` listening on this future
     final albumType = covers.effectiveAlbumType(album);
     switch (albumType) {
-      case .regular:
-      case .vault:
+      case AlbumType.regular:
+      case AlbumType.vault:
         break;
-      case .app:
+      case AlbumType.app:
         final appColor = colors.appColor(album);
         if (appColor != null) return appColor;
-      case .camera:
+      case AlbumType.camera:
         return SynchronousFuture(colors.albumCamera);
-      case .download:
+      case AlbumType.download:
         return SynchronousFuture(colors.albumDownload);
-      case .screenRecordings:
+      case AlbumType.screenRecordings:
         return SynchronousFuture(colors.albumScreenRecordings);
-      case .screenshots:
+      case AlbumType.screenshots:
         return SynchronousFuture(colors.albumScreenshots);
-      case .videoCaptures:
+      case AlbumType.videoCaptures:
         return SynchronousFuture(colors.albumVideoCaptures);
     }
     return super.color(context);

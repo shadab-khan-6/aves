@@ -489,7 +489,7 @@ packages:
     description:
       path: "."
       ref: aves
-      resolved-ref: "567c1555c2450dde5e3c1e912ed4cb0f835bd554"
+      resolved-ref: e474c5f67050f9a04e4e5b65e33e46bd2ccfdc53
       url: "https://github.com/deckerst/flutter_staggered_animations"
     source: git
     version: "1.1.1"
@@ -890,7 +890,7 @@ packages:
     description:
       path: "."
       ref: aves
-      resolved-ref: "400fa42826e22a156b69a5d52926ce5681ab9b45"
+      resolved-ref: "6a146a1815716756c0865d20fda3e053ff036b61"
       url: "https://github.com/deckerst/aves_panorama_motion_sensors.git"
     source: git
     version: "0.1.0"
@@ -987,7 +987,7 @@ packages:
     description:
       path: "."
       ref: aves
-      resolved-ref: e55ab2e47e6c9ccb86fde3ab2e22cee3e1a00190
+      resolved-ref: "308961136eed3d39cdc307b0cc3a7c3747f69448"
       url: "https://github.com/deckerst/aves_panorama.git"
     source: git
     version: "0.4.1"
@@ -1894,5 +1894,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.11.4 <4.0.0"
+  dart: ">=3.10.3 <4.0.0"
   flutter: "3.41.6"

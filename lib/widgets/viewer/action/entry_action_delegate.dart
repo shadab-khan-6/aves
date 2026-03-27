@@ -57,10 +57,10 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
   }) {
     if (mainEntry.trashed) {
       switch (action) {
-        case .delete:
-        case .restore:
+        case EntryAction.delete:
+        case EntryAction.restore:
           return true;
-        case .debug:
+        case EntryAction.debug:
           return !kReleaseMode;
         default:
           return false;
@@ -69,75 +69,75 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
       final targetEntry = EntryActions.pageActions.contains(action) ? pageEntry : mainEntry;
       final canWrite = appMode.canEditEntry && !settings.isReadOnly;
       switch (action) {
-        case .toggleFavourite:
+        case EntryAction.toggleFavourite:
           return collection != null;
-        case .delete:
-        case .rename:
-        case .move:
+        case EntryAction.delete:
+        case EntryAction.rename:
+        case EntryAction.move:
           return canWrite && targetEntry.canEdit;
-        case .copy:
+        case EntryAction.copy:
           return canWrite;
-        case .rotateCCW:
-        case .rotateCW:
+        case EntryAction.rotateCCW:
+        case EntryAction.rotateCW:
           return canWrite && targetEntry.canRotate;
-        case .flip:
+        case EntryAction.flip:
           return canWrite && targetEntry.canFlip;
-        case .convert:
+        case EntryAction.convert:
           return canWrite && !targetEntry.isPureVideo;
-        case .print:
+        case EntryAction.print:
           return !targetEntry.isPureVideo;
-        case .openMap:
+        case EntryAction.openMap:
           return !settings.useTvLayout && targetEntry.hasGps;
-        case .viewSource:
+        case EntryAction.viewSource:
           return targetEntry.isSvg;
-        case .videoCaptureFrame:
+        case EntryAction.videoCaptureFrame:
           return canWrite && targetEntry.isPureVideo;
-        case .lockViewer:
-        case .videoToggleMute:
+        case EntryAction.lockViewer:
+        case EntryAction.videoToggleMute:
           return !settings.useTvLayout && targetEntry.isPureVideo;
-        case .videoSelectStreams:
-        case .videoSetSpeed:
-        case .videoABRepeat:
-        case .videoSettings:
-        case .videoTogglePlay:
-        case .videoReplay10:
-        case .videoSkip10:
-        case .videoShowPreviousFrame:
-        case .videoShowNextFrame:
-        case .openVideoPlayer:
+        case EntryAction.videoSelectStreams:
+        case EntryAction.videoSetSpeed:
+        case EntryAction.videoABRepeat:
+        case EntryAction.videoSettings:
+        case EntryAction.videoTogglePlay:
+        case EntryAction.videoReplay10:
+        case EntryAction.videoSkip10:
+        case EntryAction.videoShowPreviousFrame:
+        case EntryAction.videoShowNextFrame:
+        case EntryAction.openVideoPlayer:
           return targetEntry.isPureVideo;
-        case .rotateScreen:
+        case EntryAction.rotateScreen:
           return !settings.useTvLayout && settings.isRotationLocked;
-        case .addShortcut:
+        case EntryAction.addShortcut:
           return device.canPinShortcut;
-        case .edit:
+        case EntryAction.edit:
           return canWrite;
-        case .copyToClipboard:
-        case .open:
-        case .setAs:
-        case .cast:
+        case EntryAction.copyToClipboard:
+        case EntryAction.open:
+        case EntryAction.setAs:
+        case EntryAction.cast:
           return !settings.useTvLayout;
-        case .info:
-        case .share:
+        case EntryAction.info:
+        case EntryAction.share:
           return true;
-        case .restore:
+        case EntryAction.restore:
           return false;
-        case .editDate:
-        case .editLocation:
-        case .editTitleDescription:
-        case .editRating:
-        case .editTags:
-        case .removeMetadata:
-        case .exportMetadata:
-        case .showGeoTiffOnMap:
-        case .convertMotionPhotoToStillImage:
-        case .viewMotionPhotoVideo:
+        case EntryAction.editDate:
+        case EntryAction.editLocation:
+        case EntryAction.editTitleDescription:
+        case EntryAction.editRating:
+        case EntryAction.editTags:
+        case EntryAction.removeMetadata:
+        case EntryAction.exportMetadata:
+        case EntryAction.showGeoTiffOnMap:
+        case EntryAction.convertMotionPhotoToStillImage:
+        case EntryAction.viewMotionPhotoVideo:
           return _metadataActionDelegate.isVisible(
             appMode: appMode,
             targetEntry: targetEntry,
             action: action,
           );
-        case .debug:
+        case EntryAction.debug:
           return !kReleaseMode;
       }
     }
@@ -146,24 +146,24 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
   bool canApply(EntryAction action) {
     final targetEntry = EntryActions.pageActions.contains(action) ? pageEntry : mainEntry;
     switch (action) {
-      case .rotateCCW:
-      case .rotateCW:
-      case .flip:
-      case .editDate:
-      case .editLocation:
-      case .editTitleDescription:
-      case .editRating:
-      case .editTags:
-      case .removeMetadata:
-      case .exportMetadata:
-      case .showGeoTiffOnMap:
-      case .convertMotionPhotoToStillImage:
-      case .viewMotionPhotoVideo:
+      case EntryAction.rotateCCW:
+      case EntryAction.rotateCW:
+      case EntryAction.flip:
+      case EntryAction.editDate:
+      case EntryAction.editLocation:
+      case EntryAction.editTitleDescription:
+      case EntryAction.editRating:
+      case EntryAction.editTags:
+      case EntryAction.removeMetadata:
+      case EntryAction.exportMetadata:
+      case EntryAction.showGeoTiffOnMap:
+      case EntryAction.convertMotionPhotoToStillImage:
+      case EntryAction.viewMotionPhotoVideo:
         return _metadataActionDelegate.canApply(targetEntry, action);
-      case .convert:
-      case .rename:
-      case .copy:
-      case .move:
+      case EntryAction.convert:
+      case EntryAction.rename:
+      case EntryAction.copy:
+      case EntryAction.move:
         return !availability.isLocked;
       default:
         return true;
@@ -189,11 +189,11 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
     final targetEntry = _getTargetEntry(context, action);
 
     switch (action) {
-      case .info:
+      case EntryAction.info:
         ShowInfoPageNotification().dispatch(context);
-      case .addShortcut:
+      case EntryAction.addShortcut:
         _addShortcut(context, targetEntry);
-      case .copyToClipboard:
+      case EntryAction.copyToClipboard:
         appService.copyToClipboard(label: targetEntry.bestTitle, uri: targetEntry.uri).then((success) {
           if (success) {
             showFeedback(context, FeedbackType.info, context.l10n.genericSuccessFeedback);
@@ -201,51 +201,51 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
             showFeedback(context, FeedbackType.warn, context.l10n.genericFailureFeedback);
           }
         });
-      case .delete:
+      case EntryAction.delete:
         _delete(context, targetEntry);
-      case .restore:
+      case EntryAction.restore:
         _move(context, targetEntry, moveType: MoveType.fromBin);
-      case .convert:
+      case EntryAction.convert:
         _convert(context, targetEntry);
-      case .print:
+      case EntryAction.print:
         EntryPrinter(targetEntry).print(context);
-      case .rename:
+      case EntryAction.rename:
         _rename(context, targetEntry);
-      case .copy:
+      case EntryAction.copy:
         _move(context, targetEntry, moveType: MoveType.copy);
-      case .move:
+      case EntryAction.move:
         _move(context, targetEntry, moveType: MoveType.move);
-      case .share:
+      case EntryAction.share:
         appService.shareEntries({targetEntry}).then((success) {
           if (!success) showNoMatchingAppDialog(context);
         });
-      case .toggleFavourite:
+      case EntryAction.toggleFavourite:
         targetEntry.toggleFavourite();
       // raster
-      case .rotateCCW:
+      case EntryAction.rotateCCW:
         _rotate(context, targetEntry, clockwise: false);
-      case .rotateCW:
+      case EntryAction.rotateCW:
         _rotate(context, targetEntry, clockwise: true);
-      case .flip:
+      case EntryAction.flip:
         _flip(context, targetEntry);
       // vector
-      case .viewSource:
+      case EntryAction.viewSource:
         _goToSourceViewer(context, targetEntry);
-      case .lockViewer:
+      case EntryAction.lockViewer:
         const LockViewNotification(locked: true).dispatch(context);
       // video
-      case .videoCaptureFrame:
-      case .videoToggleMute:
-      case .videoSelectStreams:
-      case .videoSetSpeed:
-      case .videoABRepeat:
-      case .videoSettings:
-      case .videoTogglePlay:
-      case .videoReplay10:
-      case .videoSkip10:
-      case .videoShowPreviousFrame:
-      case .videoShowNextFrame:
-      case .openVideoPlayer:
+      case EntryAction.videoCaptureFrame:
+      case EntryAction.videoToggleMute:
+      case EntryAction.videoSelectStreams:
+      case EntryAction.videoSetSpeed:
+      case EntryAction.videoABRepeat:
+      case EntryAction.videoSettings:
+      case EntryAction.videoTogglePlay:
+      case EntryAction.videoReplay10:
+      case EntryAction.videoSkip10:
+      case EntryAction.videoShowPreviousFrame:
+      case EntryAction.videoShowNextFrame:
+      case EntryAction.openVideoPlayer:
         final controller = context.read<VideoConductor>().getController(targetEntry);
         if (controller != null) {
           VideoActionNotification(
@@ -254,7 +254,7 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
             action: action,
           ).dispatch(context);
         }
-      case .edit:
+      case EntryAction.edit:
         appService.edit(targetEntry.uri, targetEntry.mimeType).then((fields) async {
           final error = fields['error'] as String?;
           if (error == null) {
@@ -265,37 +265,37 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
             await showNoMatchingAppDialog(context);
           }
         });
-      case .open:
+      case EntryAction.open:
         appService.open(targetEntry.uri, targetEntry.mimeTypeAnySubtype, forceChooser: true).then((success) {
           if (!success) showNoMatchingAppDialog(context);
         });
-      case .openMap:
+      case EntryAction.openMap:
         appService.openMap(targetEntry.latLng!).then((success) {
           if (!success) showNoMatchingAppDialog(context);
         });
-      case .setAs:
+      case EntryAction.setAs:
         appService.setAs(targetEntry.uri, targetEntry.mimeType).then((success) {
           if (!success) showNoMatchingAppDialog(context);
         });
-      case .cast:
+      case EntryAction.cast:
         const CastNotification(true).dispatch(context);
       // platform
-      case .rotateScreen:
+      case EntryAction.rotateScreen:
         _rotateScreen(context);
       // metadata
-      case .editDate:
-      case .editLocation:
-      case .editTitleDescription:
-      case .editRating:
-      case .editTags:
-      case .removeMetadata:
-      case .exportMetadata:
-      case .showGeoTiffOnMap:
-      case .convertMotionPhotoToStillImage:
-      case .viewMotionPhotoVideo:
+      case EntryAction.editDate:
+      case EntryAction.editLocation:
+      case EntryAction.editTitleDescription:
+      case EntryAction.editRating:
+      case EntryAction.editTags:
+      case EntryAction.removeMetadata:
+      case EntryAction.exportMetadata:
+      case EntryAction.showGeoTiffOnMap:
+      case EntryAction.convertMotionPhotoToStillImage:
+      case EntryAction.viewMotionPhotoVideo:
         _metadataActionDelegate.onActionSelected(context, targetEntry, collection, action);
       // debug
-      case .debug:
+      case EntryAction.debug:
         _goToDebug(context, targetEntry);
     }
   }
@@ -356,12 +356,12 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
 
   Future<void> quickShare(BuildContext context, ShareAction action) async {
     switch (action) {
-      case .imageOnly:
+      case ShareAction.imageOnly:
         if (mainEntry.isMotionPhoto) {
           final fields = await embeddedDataService.extractMotionPhotoImage(mainEntry);
           await _shareMotionPhotoPart(context, fields);
         }
-      case .videoOnly:
+      case ShareAction.videoOnly:
         if (mainEntry.isMotionPhoto) {
           final fields = await embeddedDataService.extractMotionPhotoVideo(mainEntry);
           await _shareMotionPhotoPart(context, fields);
@@ -466,9 +466,9 @@ class EntryActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
     if (options == null) return;
 
     switch (options.action) {
-      case .convert:
+      case EntryConvertAction.convert:
         await doExport(context, {targetEntry}, options);
-      case .convertMotionPhotoToStillImage:
+      case EntryConvertAction.convertMotionPhotoToStillImage:
         await _metadataActionDelegate.onActionSelected(context, targetEntry, collection, EntryAction.convertMotionPhotoToStillImage);
     }
   }

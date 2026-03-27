@@ -8,17 +8,17 @@ import 'package:flutter/widgets.dart';
 extension ExtraViewerTransition on ViewerTransition {
   TransitionBuilder builder(PageController pageController, int index) {
     switch (this) {
-      case .slide:
+      case ViewerTransition.slide:
         return PageTransitionEffects.slide(pageController, index, parallax: false);
-      case .parallax:
+      case ViewerTransition.parallax:
         return PageTransitionEffects.slide(pageController, index, parallax: true);
-      case .fade:
+      case ViewerTransition.fade:
         return PageTransitionEffects.fade(pageController, index, zoomIn: false);
-      case .zoomIn:
+      case ViewerTransition.zoomIn:
         return PageTransitionEffects.fade(pageController, index, zoomIn: true);
-      case .none:
+      case ViewerTransition.none:
         return PageTransitionEffects.none(pageController, index);
-      case .random:
+      case ViewerTransition.random:
         return _ViewerTransitionRandomizer.getBuilder(pageController, index);
     }
   }

@@ -105,7 +105,7 @@ class AppDebugPage extends StatelessWidget {
 
   Future<void> _onActionSelected(BuildContext context, AppDebugAction action) async {
     switch (action) {
-      case .prepScreenshotThumbnails:
+      case AppDebugAction.prepScreenshotThumbnails:
         // get source beforehand, as widget may be unmounted during action handling
         final source = context.read<CollectionSource>();
         settings.changeFilterVisibility(settings.hiddenFilters, true);
@@ -114,17 +114,17 @@ class AppDebugPage extends StatelessWidget {
         }, false);
         await favourites.clear();
         await favourites.add(source.visibleEntries);
-      case .prepScreenshotStats:
+      case AppDebugAction.prepScreenshotStats:
         settings.changeFilterVisibility(settings.hiddenFilters, true);
         settings.changeFilterVisibility({
           PathFilter('/storage/emulated/0/Pictures/Dev'),
         }, false);
-      case .prepScreenshotCountries:
+      case AppDebugAction.prepScreenshotCountries:
         settings.changeFilterVisibility({
           LocationFilter(LocationLevel.country, 'Belgium;BE'),
           LocationFilter(LocationLevel.country, 'Croatia;HR'),
         }, false);
-      case .mediaStoreScanDir:
+      case AppDebugAction.mediaStoreScanDir:
         // scan files copied from test assets
         // we do it via the app instead of broadcasting via ADB
         // because `MEDIA_SCANNER_SCAN_FILE` intent got deprecated in API 29
@@ -132,7 +132,7 @@ class AppDebugPage extends StatelessWidget {
           context: context,
           builder: (context) => const MediaStoreScanDirDialog(),
         );
-      case .greenScreen:
+      case AppDebugAction.greenScreen:
         await Navigator.maybeOf(context)?.push(
           MaterialPageRoute(
             builder: (context) => const Scaffold(

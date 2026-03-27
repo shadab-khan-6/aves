@@ -68,9 +68,9 @@ mixin EntryViewControllerMixin<T extends StatefulWidget> on State<T> {
     if (!mounted) return null;
     final appMode = context.read<ValueNotifier<AppMode>>().value;
     switch (appMode) {
-      case .screenSaver:
+      case AppMode.screenSaver:
         return settings.screenSaverVideoPlayback;
-      case .slideshow:
+      case AppMode.slideshow:
         return settings.slideshowVideoPlayback;
       default:
         return null;
@@ -81,20 +81,20 @@ mixin EntryViewControllerMixin<T extends StatefulWidget> on State<T> {
     if (!isViewingImage) return false;
 
     switch (videoPlaybackOverride) {
-      case .skip:
+      case SlideshowVideoPlayback.skip:
         return false;
-      case .playMuted:
-      case .playWithSound:
+      case SlideshowVideoPlayback.playMuted:
+      case SlideshowVideoPlayback.playWithSound:
         return true;
       case null:
         break;
     }
 
     switch (settings.videoAutoPlayMode) {
-      case .disabled:
+      case VideoAutoPlayMode.disabled:
         return false;
-      case .playMuted:
-      case .playWithSound:
+      case VideoAutoPlayMode.playMuted:
+      case VideoAutoPlayMode.playWithSound:
         return true;
     }
   }
@@ -105,20 +105,20 @@ mixin EntryViewControllerMixin<T extends StatefulWidget> on State<T> {
     }
 
     switch (videoPlaybackOverride) {
-      case .skip:
-      case .playWithSound:
+      case SlideshowVideoPlayback.skip:
+      case SlideshowVideoPlayback.playWithSound:
         return false;
-      case .playMuted:
+      case SlideshowVideoPlayback.playMuted:
         return true;
       case null:
         break;
     }
 
     switch (settings.videoAutoPlayMode) {
-      case .disabled:
-      case .playWithSound:
+      case VideoAutoPlayMode.disabled:
+      case VideoAutoPlayMode.playWithSound:
         return false;
-      case .playMuted:
+      case VideoAutoPlayMode.playMuted:
         return true;
     }
   }

@@ -691,10 +691,10 @@ class _InkResponseState extends State<_InkResponseStateWidget> with AutomaticKee
 
   Duration getFadeDurationForType(_HighlightType type) {
     switch (type) {
-      case .pressed:
+      case _HighlightType.pressed:
         return const Duration(milliseconds: 200);
-      case .hover:
-      case .focus:
+      case _HighlightType.hover:
+      case _HighlightType.focus:
         return widget.hoverDuration ?? const Duration(milliseconds: 50);
     }
   }
@@ -708,13 +708,13 @@ class _InkResponseState extends State<_InkResponseStateWidget> with AutomaticKee
     }
 
     switch (type) {
-      case .pressed:
+      case _HighlightType.pressed:
         statesController.update(WidgetState.pressed, value);
-      case .hover:
+      case _HighlightType.hover:
         if (callOnHover) {
           statesController.update(WidgetState.hovered, value);
         }
-      case .focus:
+      case _HighlightType.focus:
         // see handleFocusUpdate()
         break;
     }
@@ -760,13 +760,13 @@ class _InkResponseState extends State<_InkResponseStateWidget> with AutomaticKee
     assert(value == (_highlights[type] != null && _highlights[type]!.active));
 
     switch (type) {
-      case .pressed:
+      case _HighlightType.pressed:
         widget.onHighlightChanged?.call(value);
-      case .hover:
+      case _HighlightType.hover:
         if (callOnHover) {
           widget.onHover?.call(value);
         }
-      case .focus:
+      case _HighlightType.focus:
         break;
     }
   }

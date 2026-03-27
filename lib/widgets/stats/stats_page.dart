@@ -425,9 +425,9 @@ class _StatsPageState extends State<StatsPage> with FeedbackMixin, VaultAwareMix
 
     final bool? success;
     switch (target) {
-      case .clipboard:
+      case ExportTarget.clipboard:
         success = await appService.copyToClipboard(text: body);
-      case .file:
+      case ExportTarget.file:
         success = await storageService.createFile(
           'aves-stats-${DateFormat('yyyyMMdd_HHmmss', asciiLocale).format(DateTime.now())}${MimeTypes.extensionFor(mimeType)}',
           mimeType,
@@ -445,32 +445,32 @@ class _StatsPageState extends State<StatsPage> with FeedbackMixin, VaultAwareMix
 
   static Object? _exportEntryField(ExportableEntryField field, AvesEntry entry, String locale) {
     switch (field) {
-      case .uri:
+      case ExportableEntryField.uri:
         return entry.uri;
-      case .path:
+      case ExportableEntryField.path:
         return entry.path;
-      case .title:
+      case ExportableEntryField.title:
         return entry.bestTitle;
-      case .date:
+      case ExportableEntryField.date:
         return entry.bestDate?.toIso8601String();
-      case .size:
+      case ExportableEntryField.size:
         return entry.sizeBytes;
-      case .resolution:
+      case ExportableEntryField.resolution:
         return entry.getResolutionText(locale);
-      case .width:
+      case ExportableEntryField.width:
         return entry.displaySize.width.toInt();
-      case .height:
+      case ExportableEntryField.height:
         return entry.displaySize.height.toInt();
-      case .duration:
+      case ExportableEntryField.duration:
         final durationMillis = entry.durationMillis ?? 0;
         return durationMillis > 0 ? durationMillis : null;
-      case .coordinates:
+      case ExportableEntryField.coordinates:
         final latLng = entry.latLng;
         return latLng != null ? '${latLng.latitude},${latLng.longitude}' : null;
-      case .address:
+      case ExportableEntryField.address:
         final shortAddress = entry.shortAddress;
         return shortAddress.isNotEmpty ? shortAddress : null;
-      case .tags:
+      case ExportableEntryField.tags:
         return entry.tags.join(';');
     }
   }

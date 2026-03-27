@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 extension ExtraAvesThemeBrightness on AvesThemeBrightness {
   ThemeMode get appThemeMode {
     switch (this) {
-      case .system:
+      case AvesThemeBrightness.system:
         return ThemeMode.system;
-      case .light:
+      case AvesThemeBrightness.light:
         return ThemeMode.light;
-      case .dark:
-      case .black:
+      case AvesThemeBrightness.dark:
+      case AvesThemeBrightness.black:
         return ThemeMode.dark;
     }
   }

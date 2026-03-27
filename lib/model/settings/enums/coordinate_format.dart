@@ -15,11 +15,11 @@ extension ExtraCoordinateFormat on CoordinateFormat {
 
   String formatWithoutDirectionality(AppLocalizations l10n, LatLng latLng, {bool minuteSecondPadding = false, int? dmsSecondDecimals}) {
     switch (this) {
-      case .dms:
+      case CoordinateFormat.dms:
         return toDMS(l10n, latLng, minuteSecondPadding: minuteSecondPadding, secondDecimals: dmsSecondDecimals ?? 2).join(_separator);
-      case .ddm:
+      case CoordinateFormat.ddm:
         return toDDM(l10n, latLng, minutePadding: minuteSecondPadding, minuteDecimals: dmsSecondDecimals ?? 4).join(_separator);
-      case .decimal:
+      case CoordinateFormat.decimal:
         return _toDecimal(l10n, latLng).join(_separator);
     }
   }

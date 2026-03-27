@@ -181,7 +181,7 @@ class _CollectionPageState extends State<CollectionPage> {
     final appMode = context.watch<ValueNotifier<AppMode>>().value;
     final l10n = context.l10n;
     switch (appMode) {
-      case .pickMultipleMediaExternal:
+      case AppMode.pickMultipleMediaExternal:
         return hasSelection
             ? AvesFab(
                 tooltip: l10n.pickTooltip,
@@ -199,7 +199,7 @@ class _CollectionPageState extends State<CollectionPage> {
                 },
               )
             : null;
-      case .pickCollectionFiltersExternal:
+      case AppMode.pickCollectionFiltersExternal:
         return AvesFab(
           tooltip: l10n.pickTooltip,
           onPressed: () {

@@ -155,10 +155,10 @@ class _PanoramaPageState extends State<PanoramaPage> {
 
   void _toggleSensor() {
     switch (_sensorControl.value) {
-      case .none:
+      case SensorControl.none:
         _sensorControl.value = SensorControl.absoluteOrientation;
-      case .absoluteOrientation:
-      case .orientation:
+      case SensorControl.absoluteOrientation:
+      case SensorControl.orientation:
         _sensorControl.value = SensorControl.none;
     }
   }

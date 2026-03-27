@@ -67,14 +67,14 @@ class CollectionLens with ChangeNotifier {
       _subscriptions.add(
         sourceEvents.on<EntryMovedEvent>().listen((e) {
           switch (e.type) {
-            case .copy:
-            case .export:
+            case MoveType.copy:
+            case MoveType.export:
               // refreshing new items is already handled via `EntryAddedEvent`s
               break;
-            case .move:
-            case .fromBin:
+            case MoveType.move:
+            case MoveType.fromBin:
               refresh();
-            case .toBin:
+            case MoveType.toBin:
               _onEntryRemoved(e.entries);
           }
         }),
@@ -152,24 +152,24 @@ class CollectionLens with ChangeNotifier {
     bool showAlbumHeaders() => !filters.any((v) => v is StoredAlbumFilter && !v.reversed);
 
     switch (sortFactor) {
-      case .date:
+      case EntrySortFactor.date:
         switch (sectionFactor) {
-          case .none:
+          case EntrySectionFactor.none:
             return false;
-          case .album:
+          case EntrySectionFactor.album:
             return showAlbumHeaders();
-          case .month:
+          case EntrySectionFactor.month:
             return true;
-          case .day:
+          case EntrySectionFactor.day:
             return true;
         }
-      case .name:
-      case .path:
+      case EntrySortFactor.name:
+      case EntrySortFactor.path:
         return showAlbumHeaders();
-      case .rating:
+      case EntrySortFactor.rating:
         return !filters.any((f) => f is RatingFilter);
-      case .size:
-      case .duration:
+      case EntrySortFactor.size:
+      case EntrySortFactor.duration:
         return false;
     }
   }
@@ -265,17 +265,17 @@ class CollectionLens with ChangeNotifier {
     if (fixedSort) return;
 
     switch (sortFactor) {
-      case .date:
+      case EntrySortFactor.date:
         _filteredSortedEntries.sort(AvesEntrySort.compareByDate);
-      case .name:
+      case EntrySortFactor.name:
         _filteredSortedEntries.sort(AvesEntrySort.compareByName);
-      case .rating:
+      case EntrySortFactor.rating:
         _filteredSortedEntries.sort(AvesEntrySort.compareByRating);
-      case .size:
+      case EntrySortFactor.size:
         _filteredSortedEntries.sort(AvesEntrySort.compareBySize);
-      case .duration:
+      case EntrySortFactor.duration:
         _filteredSortedEntries.sort(AvesEntrySort.compareByDuration);
-      case .path:
+      case EntrySortFactor.path:
         _filteredSortedEntries.sort(AvesEntrySort.compareByPath);
     }
     if (sortReverse) {
@@ -290,31 +290,31 @@ class CollectionLens with ChangeNotifier {
       ]);
     } else {
       switch (sortFactor) {
-        case .date:
+        case EntrySortFactor.date:
           switch (sectionFactor) {
-            case .album:
+            case EntrySectionFactor.album:
               sections = groupBy<AvesEntry, EntryAlbumSectionKey>(_filteredSortedEntries, (entry) => EntryAlbumSectionKey(entry.directory));
-            case .month:
+            case EntrySectionFactor.month:
               sections = groupBy<AvesEntry, EntryDateSectionKey>(_filteredSortedEntries, (entry) => EntryDateSectionKey(entry.monthTaken));
-            case .day:
+            case EntrySectionFactor.day:
               sections = groupBy<AvesEntry, EntryDateSectionKey>(_filteredSortedEntries, (entry) => EntryDateSectionKey(entry.dayTaken));
-            case .none:
+            case EntrySectionFactor.none:
               sections = Map.fromEntries([
                 MapEntry(const SectionKey(), _filteredSortedEntries),
               ]);
           }
-        case .name:
+        case EntrySortFactor.name:
           final byAlbum = groupBy<AvesEntry, EntryAlbumSectionKey>(_filteredSortedEntries, (entry) => EntryAlbumSectionKey(entry.directory));
           final int Function(EntryAlbumSectionKey, EntryAlbumSectionKey) compare = sortReverse ? (a, b) => source.compareAlbumsByName(b.directory, a.directory) : (a, b) => source.compareAlbumsByName(a.directory, b.directory);
           sections = SplayTreeMap<EntryAlbumSectionKey, List<AvesEntry>>.of(byAlbum, compare);
-        case .rating:
+        case EntrySortFactor.rating:
           sections = groupBy<AvesEntry, EntryRatingSectionKey>(_filteredSortedEntries, (entry) => EntryRatingSectionKey(entry.rating));
-        case .size:
-        case .duration:
+        case EntrySortFactor.size:
+        case EntrySortFactor.duration:
           sections = Map.fromEntries([
             MapEntry(const SectionKey(), _filteredSortedEntries),
           ]);
-        case .path:
+        case EntrySortFactor.path:
           final byAlbum = groupBy<AvesEntry, EntryAlbumSectionKey>(_filteredSortedEntries, (entry) => EntryAlbumSectionKey(entry.directory));
           final int Function(EntryAlbumSectionKey, EntryAlbumSectionKey) compare = sortReverse ? (a, b) => source.compareAlbumsByPath(b.directory, a.directory) : (a, b) => source.compareAlbumsByPath(a.directory, b.directory);
           sections = SplayTreeMap<EntryAlbumSectionKey, List<AvesEntry>>.of(byAlbum, compare);

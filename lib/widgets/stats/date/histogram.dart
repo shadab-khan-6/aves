@@ -68,9 +68,9 @@ class _HistogramState extends State<Histogram> with AutomaticKeepAliveClientMixi
 
         late DateTime Function(DateTime) normalizeDate;
         switch (_level) {
-          case .ymd:
+          case DateLevel.ymd:
             normalizeDate = (v) => DateTime(v.year, v.month, v.day);
-          case .ym:
+          case DateLevel.ym:
             normalizeDate = (v) => DateTime(v.year, v.month);
           default:
             normalizeDate = (v) => DateTime(v.year);
@@ -121,10 +121,10 @@ class _HistogramState extends State<Histogram> with AutomaticKeepAliveClientMixi
     late int xCount;
     late DateTime Function(DateTime date) incrementDate;
     switch (level) {
-      case .ymd:
+      case DateLevel.ymd:
         xCount = xRange.inHumanDays;
         incrementDate = (date) => DateTime(date.year, date.month, date.day + 1);
-      case .ym:
+      case DateLevel.ym:
         xCount = (xRange.inHumanDays / 30.5).round();
         incrementDate = (date) => DateTime(date.year, date.month + 1);
       default:

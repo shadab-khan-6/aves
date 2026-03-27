@@ -135,7 +135,7 @@ class _MapButtonPanelState extends State<MapButtonPanel> {
   Widget? _buildNavigationButton(BuildContext context) {
     Widget? child;
     switch (context.select<MapThemeData, MapNavigationButton>((v) => v.navigationButton)) {
-      case .back:
+      case MapNavigationButton.back:
         if (!settings.useTvLayout) {
           child = MapOverlayButton.icon(
             icon: const BackButtonIcon(),
@@ -143,13 +143,13 @@ class _MapButtonPanelState extends State<MapButtonPanel> {
             tooltip: MaterialLocalizations.of(context).backButtonTooltip,
           );
         }
-      case .close:
+      case MapNavigationButton.close:
         child = MapOverlayButton.icon(
           icon: const CloseButtonIcon(),
           onPressed: SystemNavigator.pop,
           tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
         );
-      case .map:
+      case MapNavigationButton.map:
         final _openMapPage = widget.openMapPage;
         if (_openMapPage != null) {
           child = MapOverlayButton.icon(
@@ -158,7 +158,7 @@ class _MapButtonPanelState extends State<MapButtonPanel> {
             tooltip: context.l10n.openMapPageTooltip,
           );
         }
-      case .none:
+      case MapNavigationButton.none:
         break;
     }
     if (child != null) {

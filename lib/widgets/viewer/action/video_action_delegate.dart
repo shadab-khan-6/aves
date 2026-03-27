@@ -58,29 +58,29 @@ class VideoActionDelegate with FeedbackMixin, PermissionAwareMixin, SizeAwareMix
     const ToggleOverlayNotification(visible: true).dispatch(context);
 
     switch (action) {
-      case .videoCaptureFrame:
+      case EntryAction.videoCaptureFrame:
         await _captureFrame(context, entry, controller);
-      case .videoToggleMute:
+      case EntryAction.videoToggleMute:
         await controller.mute(!controller.isMuted);
-      case .videoSelectStreams:
+      case EntryAction.videoSelectStreams:
         await _showStreamSelectionDialog(context, controller);
-      case .videoSetSpeed:
+      case EntryAction.videoSetSpeed:
         await _showSpeedDialog(context, controller);
-      case .videoABRepeat:
+      case EntryAction.videoABRepeat:
         controller.toggleABRepeat();
-      case .videoSettings:
+      case EntryAction.videoSettings:
         await _showSettings(context, controller);
-      case .videoTogglePlay:
+      case EntryAction.videoTogglePlay:
         await _togglePlayPause(context, controller);
-      case .videoReplay10:
+      case EntryAction.videoReplay10:
         await controller.seekTo(max(controller.currentPosition - 10000, 0));
-      case .videoSkip10:
+      case EntryAction.videoSkip10:
         await controller.seekTo(controller.currentPosition + 10000);
-      case .videoShowPreviousFrame:
+      case EntryAction.videoShowPreviousFrame:
         await controller.skipFrames(-1);
-      case .videoShowNextFrame:
+      case EntryAction.videoShowNextFrame:
         await controller.skipFrames(1);
-      case .openVideoPlayer:
+      case EntryAction.openVideoPlayer:
         await appService.open(entry.uri, entry.mimeTypeAnySubtype, forceChooser: false).then((success) {
           if (!success) showNoMatchingAppDialog(context);
         });

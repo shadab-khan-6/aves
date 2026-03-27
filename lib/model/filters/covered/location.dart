@@ -33,11 +33,11 @@ class LocationFilter extends CollectionFilter with CoveredFilter {
       _test = (entry) => !entry.hasGps;
     } else {
       switch (level) {
-        case .country:
+        case LocationLevel.country:
           _test = (entry) => entry.addressDetails?.countryCode == _code;
-        case .state:
+        case LocationLevel.state:
           _test = (entry) => entry.addressDetails?.stateCode == _code;
-        case .place:
+        case LocationLevel.place:
           _test = (entry) => entry.addressDetails?.place == _location;
       }
     }
@@ -55,12 +55,12 @@ class LocationFilter extends CollectionFilter with CoveredFilter {
   Map<String, Object?> toMap() {
     String location = _location;
     switch (level) {
-      case .country:
-      case .state:
+      case LocationLevel.country:
+      case LocationLevel.state:
         if (_code != null) {
           location = _nameAndCode;
         }
-      case .place:
+      case LocationLevel.place:
         break;
     }
     return {
@@ -95,7 +95,7 @@ class LocationFilter extends CollectionFilter with CoveredFilter {
       return Icon(AIcons.locationUnlocated, size: size);
     }
     switch (level) {
-      case .country:
+      case LocationLevel.country:
         if (_code != null) {
           final flag = EmojiUtils.countryCodeToFlag(_code);
           if (flag != null) {
@@ -107,7 +107,7 @@ class LocationFilter extends CollectionFilter with CoveredFilter {
           }
         }
         return Icon(AIcons.country, size: size);
-      case .state:
+      case LocationLevel.state:
         if (_code != null && device.canRenderSubdivisionFlagEmojis) {
           final flag = EmojiUtils.stateCodeToFlag(_code);
           if (flag != null) {
@@ -119,7 +119,7 @@ class LocationFilter extends CollectionFilter with CoveredFilter {
           }
         }
         return Icon(AIcons.state, size: size);
-      case .place:
+      case LocationLevel.place:
         return Icon(AIcons.place, size: size);
     }
   }

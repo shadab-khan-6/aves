@@ -4,9 +4,9 @@ import 'package:flutter/painting.dart';
 extension ExtraSubtitlePosition on SubtitlePosition {
   TextAlignVertical toTextAlignVertical() {
     switch (this) {
-      case .top:
+      case SubtitlePosition.top:
         return TextAlignVertical.top;
-      case .bottom:
+      case SubtitlePosition.bottom:
         return TextAlignVertical.bottom;
     }
   }

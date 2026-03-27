@@ -29,13 +29,13 @@ mixin NavigationSettings on SettingsAccess {
 
   AvesNavItem get homeNavItem {
     switch (homePage) {
-      case .collection:
+      case HomePageSetting.collection:
         return AvesNavItem(route: CollectionPage.routeName, filters: homeCustomCollection);
-      case .albums:
+      case HomePageSetting.albums:
         return const AvesNavItem(route: AlbumListPage.routeName);
-      case .tags:
+      case HomePageSetting.tags:
         return const AvesNavItem(route: TagListPage.routeName);
-      case .explorer:
+      case HomePageSetting.explorer:
         return AvesNavItem(route: ExplorerPage.routeName, path: homeCustomExplorerPath);
     }
   }

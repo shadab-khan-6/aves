@@ -6,13 +6,13 @@ import 'package:flutter/widgets.dart';
 extension ExtraAccessibilityAnimations on AccessibilityAnimations {
   bool get animate {
     switch (this) {
-      case .system:
+      case AccessibilityAnimations.system:
         // as of Flutter v2.5.1, the check for `disableAnimations` is unreliable
         // so we cannot use `window.accessibilityFeatures.disableAnimations` nor `MediaQuery.of(context).disableAnimations`
         return !settings.areAnimationsRemoved;
-      case .disabled:
+      case AccessibilityAnimations.disabled:
         return false;
-      case .enabled:
+      case AccessibilityAnimations.enabled:
         return true;
     }
   }

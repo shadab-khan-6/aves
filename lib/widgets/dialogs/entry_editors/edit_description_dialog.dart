@@ -93,9 +93,9 @@ class _EditEntryTitleDescriptionDialogState extends State<EditEntryTitleDescript
 
   TextEditingController _fieldController(DescriptionField field) {
     switch (field) {
-      case .title:
+      case DescriptionField.title:
         return _titleTextController;
-      case .description:
+      case DescriptionField.description:
         return _descriptionTextController;
     }
   }

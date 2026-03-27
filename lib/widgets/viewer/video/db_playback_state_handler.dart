@@ -6,6 +6,7 @@ import 'package:aves/services/common/services.dart';
 import 'package:aves/theme/format.dart';
 import 'package:aves/widgets/common/extensions/build_context.dart';
 import 'package:aves/widgets/dialogs/aves_confirmation_dialog.dart';
+import 'package:aves_model/aves_model.dart';
 import 'package:aves_video/aves_video.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +24,9 @@ class DatabasePlaybackStateHandler extends PlaybackStateHandler {
     await localMediaDb.removeVideoPlayback({entryId});
 
     switch (settings.videoResumptionMode) {
-      case .never:
+      case VideoResumptionMode.never:
         return 0;
-      case .ask:
+      case VideoResumptionMode.ask:
         final l10n = context.l10n;
         final resume = await showConfirmationDialog(
           context: context,
@@ -34,7 +35,7 @@ class DatabasePlaybackStateHandler extends PlaybackStateHandler {
           cancel: l10n.videoStartOverButtonLabel,
         );
         return resume ? resumeTime : 0;
-      case .always:
+      case VideoResumptionMode.always:
         return resumeTime;
     }
   }

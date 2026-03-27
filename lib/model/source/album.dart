@@ -51,9 +51,9 @@ mixin AlbumMixin on SourceBase {
     final regularAlbums = <String>[], appAlbums = <String>[], specialAlbums = <String>[];
     for (final album in rawAlbums) {
       switch (androidFileUtils.getAlbumType(album)) {
-        case .regular:
+        case AlbumType.regular:
           regularAlbums.add(album);
-        case .app:
+        case AlbumType.app:
           appAlbums.add(album);
         default:
           specialAlbums.add(album);

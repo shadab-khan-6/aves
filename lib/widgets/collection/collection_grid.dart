@@ -691,12 +691,12 @@ class _CollectionScrollViewState extends State<_CollectionScrollView> with Widge
 
     final collection = widget.collection;
     switch (collection.sortFactor) {
-      case .date:
+      case EntrySortFactor.date:
         switch (collection.sectionFactor) {
-          case .album:
+          case EntrySectionFactor.album:
             addAlbums(collection, sectionLayouts, crumbs);
-          case .month:
-          case .day:
+          case EntrySectionFactor.month:
+          case EntrySectionFactor.day:
             final firstKey = sectionLayouts.first.sectionKey;
             final lastKey = sectionLayouts.last.sectionKey;
             if (firstKey is EntryDateSectionKey && lastKey is EntryDateSectionKey) {
@@ -718,15 +718,15 @@ class _CollectionScrollViewState extends State<_CollectionScrollView> with Widge
                 });
               }
             }
-          case .none:
+          case EntrySectionFactor.none:
             break;
         }
-      case .name:
-      case .path:
+      case EntrySortFactor.name:
+      case EntrySortFactor.path:
         addAlbums(collection, sectionLayouts, crumbs);
-      case .rating:
-      case .size:
-      case .duration:
+      case EntrySortFactor.rating:
+      case EntrySortFactor.size:
+      case EntrySortFactor.duration:
         break;
     }
     return crumbs;

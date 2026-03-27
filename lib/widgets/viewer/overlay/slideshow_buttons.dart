@@ -201,7 +201,7 @@ class _SlideshowButtonsState extends State<SlideshowButtons> {
 
   void _onAction(BuildContext context, SlideshowAction action) {
     switch (action) {
-      case .cast:
+      case SlideshowAction.cast:
         const CastNotification(true).dispatch(context);
       default:
         SlideshowActionNotification(action).dispatch(context);

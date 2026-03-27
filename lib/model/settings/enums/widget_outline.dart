@@ -6,20 +6,20 @@ import 'package:flutter/material.dart';
 extension ExtraWidgetOutline on WidgetOutline {
   Future<Color?> color(Brightness brightness) async {
     switch (this) {
-      case .none:
+      case WidgetOutline.none:
         return SynchronousFuture(null);
-      case .black:
+      case WidgetOutline.black:
         return SynchronousFuture(Colors.black);
-      case .white:
+      case WidgetOutline.white:
         return SynchronousFuture(Colors.white);
-      case .systemBlackAndWhite:
+      case WidgetOutline.systemBlackAndWhite:
         return SynchronousFuture(brightness == Brightness.dark ? Colors.black : Colors.white);
-      case .systemBlackAndWhiteHighContrast:
+      case WidgetOutline.systemBlackAndWhiteHighContrast:
         return SynchronousFuture(brightness == Brightness.dark ? Colors.white : Colors.black);
-      case .systemDynamicLowContrast:
+      case WidgetOutline.systemDynamicLowContrast:
         final color = await _getDynamicColor(brightness == Brightness.dark ? Brightness.light : Brightness.dark);
         return color ?? await WidgetOutline.systemBlackAndWhite.color(brightness);
-      case .systemDynamic:
+      case WidgetOutline.systemDynamic:
         final color = await _getDynamicColor(brightness);
         return color ?? await WidgetOutline.systemBlackAndWhiteHighContrast.color(brightness);
     }

@@ -45,23 +45,23 @@ class Transformation extends Equatable {
   Matrix4 get _orientationMatrix {
     final matrix = Matrix4.identity();
     switch (orientation) {
-      case .normal:
+      case TransformOrientation.normal:
         break;
-      case .rotate90:
+      case TransformOrientation.rotate90:
         matrix.rotateZ(math.pi / 2);
-      case .rotate180:
+      case TransformOrientation.rotate180:
         matrix.rotateZ(math.pi);
-      case .rotate270:
+      case TransformOrientation.rotate270:
         matrix.rotateZ(3 * math.pi / 2);
-      case .transverse:
+      case TransformOrientation.transverse:
         matrix.scaleByDouble(-1.0, 1.0, 1.0, 1.0);
         matrix.rotateZ(-3 * math.pi / 2);
-      case .flipVertical:
+      case TransformOrientation.flipVertical:
         matrix.scaleByDouble(1.0, -1.0, 1.0, 1.0);
-      case .transpose:
+      case TransformOrientation.transpose:
         matrix.scaleByDouble(-1.0, 1.0, 1.0, 1.0);
         matrix.rotateZ(-1 * math.pi / 2);
-      case .flipHorizontal:
+      case TransformOrientation.flipHorizontal:
         matrix.scaleByDouble(-1.0, 1.0, 1.0, 1.0);
     }
     return matrix;

@@ -10,30 +10,30 @@ extension ExtraWidgetShape on WidgetShape {
   Path path(Size widgetSize, double devicePixelRatio, {double? cornerRadiusPx}) {
     final rect = Offset.zero & widgetSize;
     switch (this) {
-      case .bumpyColumns:
+      case WidgetShape.bumpyColumns:
         return _buildBumpyColumnsPath(rect);
-      case .bumpyRows:
+      case WidgetShape.bumpyRows:
         return _buildBumpyRowsPath(rect);
-      case .circle:
+      case WidgetShape.circle:
         return Path()..addOval(
           Rect.fromCircle(
             center: rect.center,
             radius: rect.shortestSide / 2,
           ),
         );
-      case .concaveSquare:
+      case WidgetShape.concaveSquare:
         return _buildConcaveSquarePath(rect);
-      case .heart:
+      case WidgetShape.heart:
         return _buildHeartPath(rect);
-      case .rrect:
+      case WidgetShape.rrect:
         return Path()..addRRect(BorderRadius.circular(cornerRadiusPx ?? (_defaultCornerRadius * devicePixelRatio)).toRRect(rect));
-      case .tearRectLeft:
+      case WidgetShape.tearRectLeft:
         final radius = cornerRadiusPx ?? (_defaultCornerRadius * devicePixelRatio);
         return _buildTearRectPath(rect, topLeftRadiusPx: radius, topRightRadiusPx: radius * 2);
-      case .tearRectRight:
+      case WidgetShape.tearRectRight:
         final radius = cornerRadiusPx ?? (_defaultCornerRadius * devicePixelRatio);
         return _buildTearRectPath(rect, topLeftRadiusPx: radius * 2, topRightRadiusPx: radius);
-      case .wavyCircle16:
+      case WidgetShape.wavyCircle16:
         return _buildWavyCirclePath(rect, 16, .5);
     }
   }
@@ -169,11 +169,11 @@ extension ExtraWidgetShape on WidgetShape {
 
   double extentPx(Size widgetSizePx, AvesEntry entry) {
     switch (this) {
-      case .bumpyColumns:
-      case .bumpyRows:
-      case .rrect:
-      case .tearRectLeft:
-      case .tearRectRight:
+      case WidgetShape.bumpyColumns:
+      case WidgetShape.bumpyRows:
+      case WidgetShape.rrect:
+      case WidgetShape.tearRectLeft:
+      case WidgetShape.tearRectRight:
         final entryRatio = entry.displayAspectRatio;
         final widgetRatio = widgetSizePx.width / widgetSizePx.height;
         if (entryRatio > 1) {
@@ -191,10 +191,10 @@ extension ExtraWidgetShape on WidgetShape {
             return widgetSizePx.height * entryRatio;
           }
         }
-      case .circle:
-      case .heart:
-      case .wavyCircle16:
-      case .concaveSquare:
+      case WidgetShape.circle:
+      case WidgetShape.heart:
+      case WidgetShape.wavyCircle16:
+      case WidgetShape.concaveSquare:
         return widgetSizePx.shortestSide;
     }
   }

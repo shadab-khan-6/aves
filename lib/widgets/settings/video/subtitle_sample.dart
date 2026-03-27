@@ -79,23 +79,23 @@ class SubtitleSample extends StatelessWidget {
 
   Alignment _getAlignment(TextAlign textAlign, SubtitlePosition textPosition) {
     switch (textPosition) {
-      case .top:
+      case SubtitlePosition.top:
         switch (textAlign) {
-          case .left:
+          case TextAlign.left:
             return Alignment.topLeft;
-          case .right:
+          case TextAlign.right:
             return Alignment.topRight;
-          case .center:
+          case TextAlign.center:
           default:
             return Alignment.topCenter;
         }
-      case .bottom:
+      case SubtitlePosition.bottom:
         switch (textAlign) {
-          case .left:
+          case TextAlign.left:
             return Alignment.bottomLeft;
-          case .right:
+          case TextAlign.right:
             return Alignment.bottomRight;
-          case .center:
+          case TextAlign.center:
           default:
             return Alignment.bottomCenter;
         }

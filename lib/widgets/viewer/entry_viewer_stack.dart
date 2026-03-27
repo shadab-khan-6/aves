@@ -344,19 +344,19 @@ class _EntryViewerStackState extends State<EntryViewerStack> with EntryViewContr
   // * app switch / settings / etc: resumed -> inactive
   void _onAppLifecycleStateChanged() {
     switch (AvesApp.lifecycleStateNotifier.value) {
-      case .inactive:
+      case AppLifecycleState.inactive:
         // inactive: when losing focus
         // also triggered when app is rotated on Android API >=33
         break;
-      case .hidden:
-      case .paused:
-      case .detached:
+      case AppLifecycleState.hidden:
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
         // hidden: transient state between `inactive` and `paused`
         // paused: when using another app
         // detached: when app is without a view
         viewerController.autopilot = false;
         pauseVideoControllers();
-      case .resumed:
+      case AppLifecycleState.resumed:
         break;
     }
   }
@@ -379,9 +379,9 @@ class _EntryViewerStackState extends State<EntryViewerStack> with EntryViewContr
   List<Widget> _buildOverlays(Size availableSize) {
     final appMode = context.read<ValueNotifier<AppMode>>().value;
     switch (appMode) {
-      case .screenSaver:
+      case AppMode.screenSaver:
         return [];
-      case .slideshow:
+      case AppMode.slideshow:
         return [
           _buildViewerTopOverlay(availableSize),
           _buildSlideshowBottomOverlay(availableSize),
@@ -576,20 +576,20 @@ class _EntryViewerStackState extends State<EntryViewerStack> with EntryViewContr
       final isBin = collection?.filters.contains(TrashFilter.instance) ?? false;
       final entries = notification.entries;
       switch (notification.moveType) {
-        case .move:
+        case MoveType.move:
           _onEntryRemoved(context, entries);
-        case .toBin:
+        case MoveType.toBin:
           if (!isBin) {
             _onEntryRemoved(context, entries);
           }
-        case .fromBin:
+        case MoveType.fromBin:
           if (isBin) {
             _onEntryRemoved(context, entries);
           } else {
             _onEntryRestored(entries);
           }
-        case .copy:
-        case .export:
+        case MoveType.copy:
+        case MoveType.export:
           break;
       }
     } else if (notification is PopupMenuOpenedNotification) {
@@ -909,10 +909,10 @@ class _EntryViewerStackState extends State<EntryViewerStack> with EntryViewContr
 
     try {
       switch (settings.maxBrightness) {
-        case .never:
-        case .viewerOnly:
+        case MaxBrightness.never:
+        case MaxBrightness.viewerOnly:
           await AvesApp.screenBrightness?.resetApplicationScreenBrightness();
-        case .always:
+        case MaxBrightness.always:
           await AvesApp.screenBrightness?.setApplicationScreenBrightness(1);
       }
     } on PlatformException catch (e, stack) {

@@ -106,7 +106,7 @@ class _AppDrawerState extends State<AppDrawer> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
-      case .resumed:
+      case AppLifecycleState.resumed:
         if (_profileSwitchPermissionRequested) {
           _profileSwitchPermissionRequested = false;
           _initProfileSwitchFuture();

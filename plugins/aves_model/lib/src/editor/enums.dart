@@ -9,57 +9,57 @@ enum TransformOrientation { normal, rotate90, rotate180, rotate270, transverse, 
 extension ExtraTransformOrientation on TransformOrientation {
   TransformOrientation flipHorizontally() {
     switch (this) {
-      case .normal:
+      case TransformOrientation.normal:
         return TransformOrientation.flipHorizontal;
-      case .rotate90:
+      case TransformOrientation.rotate90:
         return TransformOrientation.transverse;
-      case .rotate180:
+      case TransformOrientation.rotate180:
         return TransformOrientation.flipVertical;
-      case .rotate270:
+      case TransformOrientation.rotate270:
         return TransformOrientation.transpose;
-      case .transverse:
+      case TransformOrientation.transverse:
         return TransformOrientation.rotate90;
-      case .flipVertical:
+      case TransformOrientation.flipVertical:
         return TransformOrientation.rotate180;
-      case .transpose:
+      case TransformOrientation.transpose:
         return TransformOrientation.rotate270;
-      case .flipHorizontal:
+      case TransformOrientation.flipHorizontal:
         return TransformOrientation.normal;
     }
   }
 
   bool get isFlipped {
     switch (this) {
-      case .normal:
-      case .rotate90:
-      case .rotate180:
-      case .rotate270:
+      case TransformOrientation.normal:
+      case TransformOrientation.rotate90:
+      case TransformOrientation.rotate180:
+      case TransformOrientation.rotate270:
         return false;
-      case .transverse:
-      case .flipVertical:
-      case .transpose:
-      case .flipHorizontal:
+      case TransformOrientation.transverse:
+      case TransformOrientation.flipVertical:
+      case TransformOrientation.transpose:
+      case TransformOrientation.flipHorizontal:
         return true;
     }
   }
 
   TransformOrientation rotateClockwise() {
     switch (this) {
-      case .normal:
+      case TransformOrientation.normal:
         return TransformOrientation.rotate90;
-      case .rotate90:
+      case TransformOrientation.rotate90:
         return TransformOrientation.rotate180;
-      case .rotate180:
+      case TransformOrientation.rotate180:
         return TransformOrientation.rotate270;
-      case .rotate270:
+      case TransformOrientation.rotate270:
         return TransformOrientation.normal;
-      case .transverse:
+      case TransformOrientation.transverse:
         return TransformOrientation.flipHorizontal;
-      case .flipVertical:
+      case TransformOrientation.flipVertical:
         return TransformOrientation.transverse;
-      case .transpose:
+      case TransformOrientation.transpose:
         return TransformOrientation.flipVertical;
-      case .flipHorizontal:
+      case TransformOrientation.flipHorizontal:
         return TransformOrientation.transpose;
     }
   }

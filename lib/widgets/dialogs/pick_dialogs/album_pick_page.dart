@@ -228,12 +228,12 @@ class _AlbumPickPageState extends State<_AlbumPickPage> with FeedbackMixin, Vaul
 
     void onActionSelected(ChipSetAction action) {
       switch (action) {
-        case .createGroup:
+        case ChipSetAction.createGroup:
           final parentGroupUri = context.read<FilterGroupNotifier>().value;
           _createGroup(parentGroupUri);
-        case .createAlbum:
+        case ChipSetAction.createAlbum:
           _createAlbum();
-        case .createVault:
+        case ChipSetAction.createVault:
           _createVault();
         default:
           actionDelegate.onActionSelected(context, action);

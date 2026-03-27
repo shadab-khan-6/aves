@@ -31,9 +31,9 @@ class QuickChooserRouteLayout extends SingleChildLayoutDelegate {
 
     double y;
     switch (menuPosition) {
-      case .over:
+      case PopupMenuPosition.over:
         y = triggerRect.top - childSize.height;
-      case .under:
+      case PopupMenuPosition.under:
         y = size.height - triggerRect.bottom;
     }
     double x = (triggerRect.left + (size.width - triggerRect.right) - childSize.width) / 2;

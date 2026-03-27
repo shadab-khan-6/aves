@@ -90,22 +90,22 @@ class AlbumChipSetActionDelegate extends ChipSetActionDelegate<AlbumBaseFilter> 
     bool isVault(CollectionFilter filter) => filter is StoredAlbumFilter && filter.isVault;
 
     switch (action) {
-      case .createGroup:
+      case ChipSetAction.createGroup:
         return true;
-      case .createAlbum:
-      case .createVault:
+      case ChipSetAction.createAlbum:
+      case ChipSetAction.createVault:
         return !settings.isReadOnly && appMode.canCreateFilter && !isSelecting;
-      case .group:
+      case ChipSetAction.group:
         return isMain && isSelecting;
-      case .delete:
+      case ChipSetAction.delete:
         return isMain && isSelecting && !settings.isReadOnly && (selectedFilters.isEmpty || selectedFilters.every((v) => v is StoredAlbumFilter));
-      case .remove:
+      case ChipSetAction.remove:
         return isMain && isSelecting && !settings.isReadOnly && selectedFilters.isNotEmpty && selectedFilters.every((v) => v is DynamicAlbumFilter);
-      case .rename:
+      case ChipSetAction.rename:
         return isMain && isSelecting && !settings.isReadOnly;
-      case .configureVault:
+      case ChipSetAction.configureVault:
         return isMain && selectedSingleItem && isVault(selectedFilters.first);
-      case .lockVault:
+      case ChipSetAction.lockVault:
         return isMain && selectedFilters.any(isVault);
       default:
         return super.isVisible(
@@ -126,16 +126,16 @@ class AlbumChipSetActionDelegate extends ChipSetActionDelegate<AlbumBaseFilter> 
     required Set<AlbumBaseFilter> selectedFilters,
   }) {
     switch (action) {
-      case .delete:
+      case ChipSetAction.delete:
         return selectedFilters.isNotEmpty && selectedFilters.every((v) => v is StoredAlbumFilter);
-      case .rename:
+      case ChipSetAction.rename:
         if (selectedFilters.length != 1) return false;
         final filter = selectedFilters.first;
         if (filter is StoredAlbumFilter) return filter.canRename;
         return true;
-      case .lockVault:
+      case ChipSetAction.lockVault:
         return selectedFilters.whereType<StoredAlbumFilter>().map((v) => v.album).any((v) => vaults.isVault(v) && !vaults.isLocked(v));
-      case .configureVault:
+      case ChipSetAction.configureVault:
         return true;
       default:
         return super.canApply(
@@ -152,24 +152,24 @@ class AlbumChipSetActionDelegate extends ChipSetActionDelegate<AlbumBaseFilter> 
     reportService.log('$runtimeType handles $action');
     switch (action) {
       // general
-      case .createAlbum:
+      case ChipSetAction.createAlbum:
         _createStoredAlbum(context, locked: false);
-      case .createVault:
+      case ChipSetAction.createVault:
         _createStoredAlbum(context, locked: true);
       // single/multiple filters
-      case .delete:
+      case ChipSetAction.delete:
         _deleteStoredAlbums(context);
-      case .remove:
+      case ChipSetAction.remove:
         _removeDynamicAlbum(context);
-      case .group:
+      case ChipSetAction.group:
         _group(context);
-      case .lockVault:
+      case ChipSetAction.lockVault:
         lockFilters(_getSelectedStoredAlbumFilters(context));
         browse(context);
       // single filter
-      case .rename:
+      case ChipSetAction.rename:
         _rename(context);
-      case .configureVault:
+      case ChipSetAction.configureVault:
         _configureVault(context);
       default:
         break;

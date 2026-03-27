@@ -212,13 +212,13 @@ class _BasicSectionState extends State<BasicSection> with AutomaticKeepAliveClie
         final onPressed = isEditing ? null : () => actionDelegate.onActionSelected(context, entry, collection, action);
         Widget button;
         switch (action) {
-          case .editRating:
+          case EntryAction.editRating:
             button = RateButton(
               blurred: false,
               onChooserValue: (rating) => actionDelegate.quickRate(context, entry, rating),
               onPressed: onPressed,
             );
-          case .editTags:
+          case EntryAction.editTags:
             button = TagButton(
               blurred: false,
               onChooserValue: (filter) => actionDelegate.quickTag(context, entry, filter),

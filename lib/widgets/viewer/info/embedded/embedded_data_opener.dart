@@ -41,15 +41,15 @@ class EmbeddedDataOpener extends StatelessWidget with FeedbackMixin {
   Future<void> _openEmbeddedData(BuildContext context, OpenEmbeddedDataNotification notification) async {
     late Map fields;
     switch (notification.source) {
-      case .googleDevice:
+      case EmbeddedDataSource.googleDevice:
         fields = await embeddedDataService.extractGoogleDeviceItem(entry, notification.dataUri!);
-      case .motionPhotoVideo:
+      case EmbeddedDataSource.motionPhotoVideo:
         fields = await embeddedDataService.extractMotionPhotoVideo(entry);
-      case .mpf:
+      case EmbeddedDataSource.mpf:
         fields = await embeddedDataService.extractJpegMpfItem(entry, notification.mpfId!);
-      case .videoCover:
+      case EmbeddedDataSource.videoCover:
         fields = await embeddedDataService.extractVideoEmbeddedPicture(entry);
-      case .xmp:
+      case EmbeddedDataSource.xmp:
         fields = await embeddedDataService.extractXmpDataProp(entry, notification.props, notification.mimeType);
     }
     AvesEntry.normalizeMimeTypeFields(fields);

@@ -7,12 +7,12 @@ extension ExtraVideoLoopMode on VideoLoopMode {
     if (entry.isAnimated) return true;
 
     switch (this) {
-      case .never:
+      case VideoLoopMode.never:
         return false;
-      case .shortOnly:
+      case VideoLoopMode.shortOnly:
         final durationMillis = entry.durationMillis;
         return durationMillis != null ? durationMillis < shortVideoThreshold.inMilliseconds : false;
-      case .always:
+      case VideoLoopMode.always:
         return true;
     }
   }
