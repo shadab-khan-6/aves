@@ -97,7 +97,7 @@ class StatsTopPage<T extends Comparable> extends StatelessWidget with FeedbackMi
       });
     }
 
-    final csvContent = csv.encode([
+    final csvContent = const ListToCsvConverter().convert([
       [title, '#'],
       ...sortedEntries.map((kv) {
         final filter = filterBuilder(kv.key);

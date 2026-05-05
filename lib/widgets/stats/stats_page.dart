@@ -481,7 +481,7 @@ class _StatsPageState extends State<StatsPage> with FeedbackMixin, VaultAwareMix
     List<String> toCsvValues(AvesEntry entry) => fields.map((field) {
       return _exportEntryField(field, entry, locale)?.toString() ?? '';
     }).toList();
-    return csv.encode([headers, ...entries.map(toCsvValues)]);
+    return const ListToCsvConverter().convert([headers, ...entries.map(toCsvValues)], convertNullTo: '');
   }
 
   String _exportToJson(List<ExportableEntryField> fields) {
